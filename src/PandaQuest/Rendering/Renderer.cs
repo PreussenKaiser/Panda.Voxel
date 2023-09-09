@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PandaQuest.Input;
 
 namespace PandaQuest.Rendering;
 
@@ -14,12 +15,16 @@ public sealed class Renderer
         this.effect = new BasicEffect(graphicsDevice);
     }
 
-    public void Draw()
+    public void Draw(Camera camera)
     {
+        this.effect.Projection = camera.Projection;
+        this.effect.World = camera.World;
+        this.effect.View = camera.View;
+
         this.graphicsDevice.Clear(Color.CornflowerBlue);
 
         var vertexPositionTextures1 = new[]
-{
+        {
             new VertexPositionColor(new Vector3(0, 0, 0), Color.White),
             new VertexPositionColor(new Vector3(64, 0, 0), Color.White),
             new VertexPositionColor(new Vector3(64, 64, 0), Color.White),
@@ -31,9 +36,6 @@ public sealed class Renderer
             new VertexPositionColor(new Vector3(64, 64, 0), Color.White),
             new VertexPositionColor(new Vector3(0, 64, 0), Color.White),
         };
-
-        this.effect.World = Matrix.CreateOrthographicOffCenter(
-            0, this.graphicsDevice.Viewport.Width, this.graphicsDevice.Viewport.Height, 0, 0, 1);
 
         foreach (EffectPass effectPass in this.effect.CurrentTechnique.Passes)
         {
