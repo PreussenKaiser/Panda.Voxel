@@ -18,7 +18,7 @@ public sealed class Renderer
     public void Draw(Camera camera)
     {
         this.effect.Projection = camera.Projection;
-        this.effect.World = camera.World;
+        this.effect.World = Matrix.Identity;
         this.effect.View = camera.View;
 
         this.graphicsDevice.Clear(Color.CornflowerBlue);
@@ -26,15 +26,15 @@ public sealed class Renderer
         var vertexPositionTextures1 = new[]
         {
             new VertexPositionColor(new Vector3(0, 0, 0), Color.White),
-            new VertexPositionColor(new Vector3(64, 0, 0), Color.White),
-            new VertexPositionColor(new Vector3(64, 64, 0), Color.White),
+            new VertexPositionColor(new Vector3(16, 0, 0), Color.White),
+            new VertexPositionColor(new Vector3(16, 16, 0), Color.White),
         };
 
         var vertexPositionTextures2 = new[]
         {
             new VertexPositionColor(new Vector3(0, 0, 0), Color.White),
-            new VertexPositionColor(new Vector3(64, 64, 0), Color.White),
-            new VertexPositionColor(new Vector3(0, 64, 0), Color.White),
+            new VertexPositionColor(new Vector3(16, 16, 0), Color.White),
+            new VertexPositionColor(new Vector3(0, 16, 0), Color.White),
         };
 
         foreach (EffectPass effectPass in this.effect.CurrentTechnique.Passes)

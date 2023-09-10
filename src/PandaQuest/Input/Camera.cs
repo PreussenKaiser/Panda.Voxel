@@ -1,115 +1,61 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace PandaQuest.Input;
 
 public sealed class Camera
 {
-    private readonly Matrix projectionMatrix;
-    private readonly Matrix worldMatrix;
-
-    private readonly Vector2 screenCenter;
-
-    private Vector3 target;
     private Vector3 position;
-    private Matrix viewMatrix;
-    private Vector2 cameraDelta;
-
-    private MouseState previousMouseState;
-    private MouseState currentMouseState;
+    private Vector3 target;
+    private Vector3 rotation;
 
     public Camera(GraphicsDevice graphicsDevice)
     {
-        this.target = new Vector3(0, 0, 0);
         this.position = new Vector3(0, 0, -16);
 
-        this.screenCenter = new Vector2(
+        this.ScreenCenter = new Vector2(
             graphicsDevice.Viewport.Width / 2,
             graphicsDevice.Viewport.Height / 2);
 
-        this.projectionMatrix = Matrix.CreatePerspectiveFieldOfView(
+        this.Projection = Matrix.CreatePerspectiveFieldOfView(
             MathHelper.ToRadians(90),
             graphicsDevice.DisplayMode.AspectRatio,
             1, 1000);
-
-        this.viewMatrix = Matrix.CreateLookAt(this.position, this.target, new Vector3(0, 1, 0));
-        this.worldMatrix = Matrix.CreateWorld(this.target, Vector3.Forward, Vector3.Up);
-
-        this.currentMouseState = Mouse.GetState();
-
-        Mouse.SetPosition((int)this.screenCenter.X, (int)this.screenCenter.Y);
     }
 
-    public Matrix Projection => this.projectionMatrix;
+    public Vector2 ScreenCenter { get; }
 
-    public Matrix View => this.viewMatrix;
+    public Matrix Projection { get; }
 
-    public Matrix World => this.worldMatrix;
+    public Matrix View => Matrix.CreateLookAt(this.position, this.target, Vector3.Up);
 
-    public void Update(GameTime gameTime)
+    public Vector3 PreviewMove(Vector3 moveVector)
     {
-        this.UpdateKeyboard();
-        this.UpdateMouse(gameTime);
+        Matrix rotationMatrix = Matrix.CreateRotationY(this.rotation.Y);
+        Vector3 moveTransform = Vector3.Transform(moveVector, rotationMatrix);
+
+        return this.position + moveTransform;
     }
 
-    private void UpdateKeyboard()
+    public void SetPosition(Vector3 position)
     {
-        KeyboardState keyboardState = Keyboard.GetState();
+        this.position = this.PreviewMove(position);
 
-        if (keyboardState.IsKeyDown(Keys.W))
-        {
-            this.position.Z += 1;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.S))
-        {
-            this.position.Z -= 1;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.A))
-        {
-            this.position.X += 1;
-            this.target.X += 1;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.D))
-        {
-            this.position.X -= 1;
-            this.target.X -= 1;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.Space))
-        {
-            this.position.Y += 1;
-            this.target.Y += 1;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.LeftControl))
-        {
-            this.position.Y -= 1;
-            this.target.Y -= 1;
-        }
-
-        this.viewMatrix = Matrix.CreateLookAt(this.position, this.target, Vector3.Up);
+        this.UpdateTarget();
     }
 
-    private void UpdateMouse(GameTime gameTime)
+    public void SetRotation(Vector3 rotation)
     {
-        this.previousMouseState = this.currentMouseState;
-        this.currentMouseState = Mouse.GetState();
+        this.rotation = rotation;
 
-        float delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 20f;
+        this.UpdateTarget();
+    }
 
-        var currentMousePosition = new Vector2(this.currentMouseState.X, this.currentMouseState.Y);
-        var previousMousePosition = new Vector2(this.previousMouseState.X, this.previousMouseState.Y);
+    private void UpdateTarget()
+    {
+        Matrix rotationMatrix = Matrix.CreateRotationX(this.rotation.X) * Matrix.CreateRotationY(this.rotation.Y);
+        Vector3 targetOffset = Vector3.Transform(Vector3.UnitZ, rotationMatrix);
 
-        this.cameraDelta = Vector2.Clamp(
-            delta * (currentMousePosition - previousMousePosition),
-            new Vector2(-20, -20),
-            new Vector2(20, 20));
-
-        this.target.X -= this.cameraDelta.X;
-        this.target.Y -= this.cameraDelta.Y;
+        this.target = this.position + targetOffset;
     }
 }
