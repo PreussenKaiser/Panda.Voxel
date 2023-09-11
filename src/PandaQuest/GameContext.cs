@@ -9,9 +9,11 @@ namespace PandaQuest;
 public sealed class GameContext : Game
 {
     private readonly GraphicsDeviceManager graphics;
+    private SpriteBatch spriteBatch;
 
     private Player player;
     private Renderer renderer;
+
 
     public GameContext()
     {
@@ -23,9 +25,11 @@ public sealed class GameContext : Game
     protected override void Initialize()
     {
         var camera = new Camera(this.GraphicsDevice);
+        var texture = this.Content.Load<Texture2D>("Textures/Blocks/test");
 
         this.player = new Player(camera);
-        this.renderer = new Renderer(this.GraphicsDevice);
+        this.renderer = new Renderer(this.GraphicsDevice, texture);
+        this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
         base.Initialize();
     }
