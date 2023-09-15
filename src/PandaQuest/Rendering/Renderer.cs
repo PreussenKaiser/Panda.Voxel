@@ -16,35 +16,32 @@ public sealed class Renderer
         this.effect = new BasicEffect(graphicsDevice)
         {
             Texture = texture,
-            TextureEnabled = true
+            TextureEnabled = true,
+            World = Matrix.Identity
         };
     }
 
-    public void Draw(Camera camera)
+    public void Draw(Camera camera, VertexPositionTexture[] vertices, short[] indices)
     {
         this.graphicsDevice.Clear(Color.CornflowerBlue);
 
         this.effect.Projection = camera.Projection;
-        this.effect.World = Matrix.Identity;
         this.effect.View = camera.View;
 
-        var vertices = new VertexPositionTexture[3]
-        {
-            new(new Vector3(0, 0, 0), new Vector2(0, 0)),
-            new(new Vector3(16, 0, 0), new Vector2(1, 0)),
-            new(new Vector3(16, 16, 0), new Vector2(1, 1))
-        };
+        var vertexBuffer = new VertexBuffer(this.graphicsDevice, typeof(VertexPositionTexture), vertices.Length, BufferUsage.WriteOnly);
+        var indexBuffer = new IndexBuffer(this.graphicsDevice, IndexElementSize.SixteenBits, sizeof(short) * indices.Length, BufferUsage.WriteOnly);
 
-        var buffer = new VertexBuffer(this.graphicsDevice, typeof(VertexPositionTexture), vertices.Length, BufferUsage.WriteOnly);
-
-        buffer.SetData(vertices);
+        vertexBuffer.SetData(vertices);
+        indexBuffer.SetData(indices);
+        
+        this.graphicsDevice.SetVertexBuffer(vertexBuffer);
+        this.graphicsDevice.Indices = indexBuffer;
 
         foreach (EffectPass effectPass in this.effect.CurrentTechnique.Passes)
         {
             effectPass.Apply();
 
-            this.graphicsDevice.SetVertexBuffer(buffer);
-            this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
+            this.graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, indices.Length);
         }
     }
 }
