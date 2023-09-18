@@ -1,17 +1,85 @@
-﻿using SystemVector3 = System.Numerics.Vector3;
-using MonoGameVector3 = Microsoft.Xna.Framework.Vector3;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace PandaQuest.Extensions;
 
 public static class Vector3Extensions
 {
-    public static SystemVector3 ToSystemVector3(this MonoGameVector3 vector)
+    public static VertexPositionTexture[] ToFrontFace(this Vector3 position)
     {
-        return new SystemVector3(vector.X, vector.Y, vector.Z);
+        var faces = new VertexPositionTexture[4]
+        {
+            new(new Vector3(position.X - .5f, position.Y - .5f, position.Z - .5f), new Vector2(0, 0)),
+            new(new Vector3(position.X + .5f, position.Y - .5f, position.Z - .5f), new Vector2(1, 0)),
+            new(new Vector3(position.X - .5f, position.Y + .5f, position.Z - .5f), new Vector2(0, 1)),
+            new(new Vector3(position.X + .5f, position.Y + .5f, position.Z - .5f), new Vector2(1, 1)),
+        };
+
+        return faces;
     }
 
-    public static MonoGameVector3 ToMonoGGameVector3(this MonoGameVector3 vector)
+    public static VertexPositionTexture[] ToBackFace(this Vector3 position)
     {
-        return new MonoGameVector3(vector.X, vector.Y, vector.X);
+        var faces = new VertexPositionTexture[4]
+        {
+            new(new Vector3(position.X + .5f, position.Y - .5f, position.Z + .5f), new Vector2(1, 1)),
+            new(new Vector3(position.X - .5f, position.Y - .5f, position.Z + .5f), new Vector2(0, 1)),
+            new(new Vector3(position.X + .5f, position.Y + .5f, position.Z + .5f), new Vector2(1, 0)),
+            new(new Vector3(position.X - .5f, position.Y + .5f, position.Z + .5f), new Vector2(0, 0)),
+        };
+
+        return faces;
+    }
+
+    public static VertexPositionTexture[] ToLeftFace(this Vector3 position)
+    {
+        var faces = new VertexPositionTexture[4]
+        {
+            new(new Vector3(position.X + .5f, position.Y - .5f, position.Z - .5f), new Vector2(1, 1)),
+            new(new Vector3(position.X + .5f, position.Y - .5f, position.Z + .5f), new Vector2(0, 1)),
+            new(new Vector3(position.X + .5f, position.Y + .5f, position.Z - .5f), new Vector2(1, 0)),
+            new(new Vector3(position.X + .5f, position.Y + .5f, position.Z + .5f), new Vector2(0, 0)),
+        };
+
+        return faces;
+    }
+
+    public static VertexPositionTexture[] ToRightFace(this Vector3 position)
+    {
+        var faces = new VertexPositionTexture[4]
+        {
+            new(new Vector3(position.X - .5f, position.Y - .5f, position.Z - .5f), new Vector2(0, 1)),
+            new(new Vector3(position.X - .5f, position.Y + .5f, position.Z - .5f), new Vector2(0, 0)),
+            new(new Vector3(position.X - .5f, position.Y - .5f, position.Z + .5f), new Vector2(1, 1)),
+            new(new Vector3(position.X - .5f, position.Y + .5f, position.Z + .5f), new Vector2(1, 0)),
+        };
+
+        return faces;
+    }
+    
+    public static VertexPositionTexture[] ToTopFace(this Vector3 position)
+    {
+        var faces = new VertexPositionTexture[4]
+        {
+            new(new Vector3(position.X - .5f, position.Y + .5f, position.Z + .5f), new Vector2(0, 1)),
+            new(new Vector3(position.X - .5f, position.Y + .5f, position.Z - .5f), new Vector2(0, 0)),
+            new(new Vector3(position.X + .5f, position.Y + .5f, position.Z + .5f), new Vector2(1, 1)),
+            new(new Vector3(position.X + .5f, position.Y + .5f, position.Z - .5f), new Vector2(1, 0)),
+        };
+
+        return faces;
+    }
+
+    public static VertexPositionTexture[] ToBottomFace(this Vector3 position)
+    {
+        var faces = new VertexPositionTexture[4]
+        {
+            new(new Vector3(position.X - .5f, position.Y - .5f, position.Z - .5f), new Vector2(0, 1)),
+            new(new Vector3(position.X - .5f, position.Y - .5f, position.Z + .5f), new Vector2(1, 1)),
+            new(new Vector3(position.X + .5f, position.Y - .5f, position.Z - .5f), new Vector2(0, 0)),
+            new(new Vector3(position.X + .5f, position.Y - .5f, position.Z + .5f), new Vector2(1, 0)),
+        };
+
+        return faces;
     }
 }

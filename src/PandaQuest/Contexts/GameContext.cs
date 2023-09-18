@@ -1,37 +1,43 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PandaQuest.Extensions;
 using PandaQuest.Generators;
 using PandaQuest.Input;
-using PandaQuest.Models;
+using PandaQuest.Physics;
 using PandaQuest.Rendering;
+using PandaQuest.Time;
 
-namespace PandaQuest;
+namespace PandaQuest.Contexts;
 
 public sealed class GameContext : Game
 {
     private readonly GraphicsDeviceManager graphics;
-    private readonly WorldGenerator worldGenerator;
 
-    private Player player;
+    private WorldContext world;
     private Renderer renderer;
 
     public GameContext()
     {
         this.graphics = new GraphicsDeviceManager(this);
-        this.worldGenerator = new WorldGenerator();
 
         this.Content.RootDirectory = "Content";
     }
 
     protected override void Initialize()
     {
-        this.GraphicsDevice.SamplerStates[0] = new SamplerState { Filter = TextureFilter.Point };
+        this.GraphicsDevice.Pixelate();
 
         var camera = new Camera(this.GraphicsDevice);
-        var texture = this.Content.Load<Texture2D>("Textures/Blocks/test");
+        var texture = this.Content.Load<Texture2D>("Textures/Blocks/grass");
+        var player = new Player(camera);
 
-        this.player = new Player(camera);
+        this.world = new WorldContext(
+            player,
+            new PhysicsProvider(),
+            new TestWorldGenerator(),
+            new OverworldTimeProvider());
+
         this.renderer = new Renderer(this.GraphicsDevice, texture);
 
         base.Initialize();
@@ -41,19 +47,17 @@ public sealed class GameContext : Game
     {
         if (Keyboard.GetState().IsKeyDown(Keys.Escape))
         {
-            base.Exit();
+            this.Exit();
         }
 
-        this.player.Update(gameTime);
+        this.world.Update(gameTime);
 
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        Block block = this.worldGenerator.Generate(new Vector3(1, 1, 1));
-
-        this.renderer.Draw(this.player.Camera, block.Vertices, block.Indices);
+        this.renderer.Draw(this.world.Player.Camera, this.world.Generation.Blocks);
 
         base.Draw(gameTime);
     }

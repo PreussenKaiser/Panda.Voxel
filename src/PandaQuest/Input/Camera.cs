@@ -11,7 +11,7 @@ public sealed class Camera
 
     public Camera(GraphicsDevice graphicsDevice)
     {
-        this.position = new Vector3(0, 0, -16);
+        this.position = new Vector3(0, 2, 0);
 
         this.ScreenCenter = new Vector2(
             graphicsDevice.Viewport.Width / 2,
@@ -20,7 +20,7 @@ public sealed class Camera
         this.Projection = Matrix.CreatePerspectiveFieldOfView(
             MathHelper.ToRadians(90),
             graphicsDevice.DisplayMode.AspectRatio,
-            1, 1000);
+            .1f, 1000);
     }
 
     public Vector2 ScreenCenter { get; }

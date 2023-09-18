@@ -30,38 +30,36 @@ public sealed class Player
 
         if (keyboardState.IsKeyDown(Keys.W))
         {
-            moveVector.Z = 1;
+            moveVector.Z = Constants.MOVE_SPEED;
         }
 
         if (keyboardState.IsKeyDown(Keys.S))
         {
-            moveVector.Z = -1;
+            moveVector.Z = -Constants.MOVE_SPEED;
         }
 
         if (keyboardState.IsKeyDown(Keys.A))
         {
-            moveVector.X = 1;
+            moveVector.X = Constants.MOVE_SPEED;
         }
 
         if (keyboardState.IsKeyDown(Keys.D))
         {
-            moveVector.X = -1;
+            moveVector.X = -Constants.MOVE_SPEED;
         }
 
         if (keyboardState.IsKeyDown(Keys.Space))
         {
-            moveVector.Y = 1;
+            moveVector.Y = Constants.MOVE_SPEED;
         }
 
         if (keyboardState.IsKeyDown(Keys.LeftControl))
         {
-            moveVector.Y = -1;
+            moveVector.Y = -Constants.MOVE_SPEED;
         }
 
         if (moveVector != Vector3.Zero)
         {
-            moveVector.Normalize();
-
             this.camera.SetPosition(moveVector);
         }
     }
