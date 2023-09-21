@@ -28,9 +28,12 @@ public sealed class GameContext : Game
     {
         this.GraphicsDevice.Pixelate();
 
-        var camera = new Camera(this.GraphicsDevice);
+        var cameraPosition = new Vector3(0, 7, 0);
+        var playerPosition = new Vector3(0, 6, 0);
+
+        var camera = new Camera(this.GraphicsDevice, cameraPosition);
         var texture = this.Content.Load<Texture2D>("Textures/Blocks/grass");
-        var player = new Player(camera);
+        var player = new Player(camera, playerPosition);
 
         this.world = new WorldContext(
             player,

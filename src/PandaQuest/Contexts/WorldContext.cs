@@ -26,5 +26,6 @@ public sealed class WorldContext
     {
         this.Generation.Generate();
         this.Player.Update(gameTime);
+        this.physics.Update(this.Player, this.Generation.Blocks);
     }
 }

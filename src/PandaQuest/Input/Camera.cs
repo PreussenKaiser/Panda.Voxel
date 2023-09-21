@@ -6,19 +6,20 @@ namespace PandaQuest.Input;
 public sealed class Camera
 {
     private Vector3 position;
+
     private Vector3 target;
     private Vector3 rotation;
 
-    public Camera(GraphicsDevice graphicsDevice)
+    public Camera(GraphicsDevice graphicsDevice, Vector3 position)
     {
-        this.position = new Vector3(0, 2, 0);
-
+        this.position = position;
+        
         this.ScreenCenter = new Vector2(
             graphicsDevice.Viewport.Width / 2,
             graphicsDevice.Viewport.Height / 2);
 
         this.Projection = Matrix.CreatePerspectiveFieldOfView(
-            MathHelper.ToRadians(90),
+            MathHelper.ToRadians(Constants.FIELD_OF_VIEW),
             graphicsDevice.DisplayMode.AspectRatio,
             .1f, 1000);
     }
@@ -28,6 +29,8 @@ public sealed class Camera
     public Matrix Projection { get; }
 
     public Matrix View => Matrix.CreateLookAt(this.position, this.target, Vector3.Up);
+
+    public Vector3 Position => this.position;
 
     public Vector3 PreviewMove(Vector3 moveVector)
     {

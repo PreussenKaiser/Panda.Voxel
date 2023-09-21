@@ -1,18 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using PandaQuest.Input.Movement;
 
 namespace PandaQuest.Input;
 
 public sealed class Player
 {
+    public Vector3 Position;
+
     private readonly Camera camera;
 
+    private readonly IMovement movement;
     private Vector3 mouseRotationBuffer;
     private MouseState previousMouseState;
 
-    public Player(Camera camera)
+    public Player(Camera camera, Vector3 position)
     {
+        this.Position = position;
         this.camera = camera;
+        this.movement = new FlyingMovement();
     }
 
     public Camera Camera => this.camera;
@@ -25,41 +31,12 @@ public sealed class Player
 
     private void CheckKeyboard()
     {
-        Vector3 moveVector = Vector3.Zero;
-        KeyboardState keyboardState = Keyboard.GetState();
-
-        if (keyboardState.IsKeyDown(Keys.W))
-        {
-            moveVector.Z = Constants.MOVE_SPEED;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.S))
-        {
-            moveVector.Z = -Constants.MOVE_SPEED;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.A))
-        {
-            moveVector.X = Constants.MOVE_SPEED;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.D))
-        {
-            moveVector.X = -Constants.MOVE_SPEED;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.Space))
-        {
-            moveVector.Y = Constants.MOVE_SPEED;
-        }
-
-        if (keyboardState.IsKeyDown(Keys.LeftControl))
-        {
-            moveVector.Y = -Constants.MOVE_SPEED;
-        }
+        Vector3 moveVector = this.movement.GetInput();
 
         if (moveVector != Vector3.Zero)
         {
+            this.Position += moveVector;
+
             this.camera.SetPosition(moveVector);
         }
     }
