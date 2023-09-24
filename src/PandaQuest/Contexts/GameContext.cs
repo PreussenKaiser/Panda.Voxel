@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using PandaQuest.Extensions;
 using PandaQuest.Generators;
 using PandaQuest.Input;
+using PandaQuest.Input.CameraInput;
 using PandaQuest.Physics;
 using PandaQuest.Rendering;
 using PandaQuest.Time;
@@ -16,6 +17,7 @@ public sealed class GameContext : Game
 
     private WorldContext world;
     private Renderer renderer;
+    private PlayerCamera camera;
 
     public GameContext()
     {
@@ -28,12 +30,11 @@ public sealed class GameContext : Game
     {
         this.GraphicsDevice.Pixelate();
 
-        var cameraPosition = new Vector3(0, 7, 0);
-        var playerPosition = new Vector3(0, 6, 0);
-
-        var camera = new Camera(this.GraphicsDevice, cameraPosition);
         var texture = this.Content.Load<Texture2D>("Textures/Blocks/grass");
-        var player = new Player(camera, playerPosition);
+        var player = new Player(new Vector3(0, 6, 0));
+        var mouseInput = new MouseInput(new Vector2(
+            this.GraphicsDevice.Viewport.Width / 2,
+            this.GraphicsDevice.Viewport.Height / 2));
 
         this.world = new WorldContext(
             player,
@@ -42,6 +43,7 @@ public sealed class GameContext : Game
             new OverworldTimeProvider());
 
         this.renderer = new Renderer(this.GraphicsDevice, texture);
+        this.camera = new PlayerCamera(player, mouseInput, this.GraphicsDevice.Viewport.AspectRatio);
 
         base.Initialize();
     }
@@ -54,13 +56,14 @@ public sealed class GameContext : Game
         }
 
         this.world.Update(gameTime);
+        this.camera.Update(gameTime);
 
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        this.renderer.Draw(this.world.Player.Camera, this.world.Generation.Blocks);
+        this.renderer.Draw(this.camera, this.world.Generation.Blocks);
 
         base.Draw(gameTime);
     }

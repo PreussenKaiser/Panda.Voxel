@@ -11,15 +11,14 @@ public sealed class PhysicsProvider
 {
     public void Update(Player player, IEnumerable<Block> blocks)
     {
-        var belowPlayerPosition = player.Position - new Vector3(0, 1, 0);
-        double belowCeilingY = Math.Ceiling(belowPlayerPosition.Y);
-        double playerCeilingY = Math.Ceiling(player.Position.Y);
+        double belowPlayer = Math.Ceiling(player.Position.Y);
+        bool collision = blocks.Any(b => b.Position.Y == belowPlayer);
 
-        bool collision = blocks.Any(block => belowCeilingY == playerCeilingY);
+        float yMoveVector = collision ? 0 : -Constants.MOVE_SPEED;
 
-        if (collision)
-        {
-            player.Position = 
-        }
+        player.MoveVector = new Vector3(
+            player.MoveVector.X,
+            yMoveVector,
+            player.MoveVector.Z);
     }
 }

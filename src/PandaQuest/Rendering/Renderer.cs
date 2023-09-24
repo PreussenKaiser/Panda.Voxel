@@ -27,7 +27,7 @@ public sealed class Renderer
         };
     }
 
-    public void Draw(Camera camera, IEnumerable<Block> blocks)
+    public void Draw(PlayerCamera camera, IEnumerable<Block> blocks)
     {
         this.graphicsDevice.Clear(Color.CornflowerBlue);
 

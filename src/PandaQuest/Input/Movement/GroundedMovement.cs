@@ -32,7 +32,7 @@ public sealed class GroundedMovement : IMovement
 
         if (keyboardState.IsKeyDown(Keys.Space))
         {
-            moveVector.Y = Constants.MOVE_SPEED;
+            moveVector.Y = 1;
         }
 
         return moveVector;

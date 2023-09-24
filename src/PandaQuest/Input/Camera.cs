@@ -6,7 +6,6 @@ namespace PandaQuest.Input;
 public sealed class Camera
 {
     private Vector3 position;
-
     private Vector3 target;
     private Vector3 rotation;
 
@@ -29,8 +28,6 @@ public sealed class Camera
     public Matrix Projection { get; }
 
     public Matrix View => Matrix.CreateLookAt(this.position, this.target, Vector3.Up);
-
-    public Vector3 Position => this.position;
 
     public Vector3 PreviewMove(Vector3 moveVector)
     {
