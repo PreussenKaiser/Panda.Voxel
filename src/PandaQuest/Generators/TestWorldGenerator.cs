@@ -34,6 +34,9 @@ public sealed class TestWorldGenerator : IWorldGenerator
             }
         }
 
+        // this.blocks.Add(new Block(new Vector3(0, 1, 0)));
+        // this.blocks.Add(new Block(new Vector3(0, 2, 0)));
+
         this.generated = true;
     }
 }

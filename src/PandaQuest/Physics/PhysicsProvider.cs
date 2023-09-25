@@ -9,16 +9,22 @@ namespace PandaQuest.Physics;
 
 public sealed class PhysicsProvider
 {
-    public void Update(Player player, IEnumerable<Block> blocks)
+    public void Update(IEnumerable<Block> blocks, Vector3 playerPosition, ref Vector3 moveVector)
     {
-        double belowPlayer = Math.Ceiling(player.Position.Y);
-        bool collision = blocks.Any(b => b.Position.Y == belowPlayer);
+        var playerPositionCeiling = new Vector3(
+            (float)Math.Ceiling(playerPosition.X),
+            (float)Math.Ceiling(playerPosition.Y),
+            (float)Math.Ceiling(playerPosition.Z));
 
-        float yMoveVector = collision ? 0 : -Constants.MOVE_SPEED;
+        var aboveBlockPosition = new Vector3(playerPositionCeiling.X, playerPositionCeiling.Y + 2, playerPositionCeiling.Z);
+        var belowBlockPosition = new Vector3(playerPositionCeiling.X, playerPositionCeiling.Y, playerPositionCeiling.Z);
 
-        player.MoveVector = new Vector3(
-            player.MoveVector.X,
-            yMoveVector,
-            player.MoveVector.Z);
+        moveVector.Y = blocks.Any(b => b.Position == belowBlockPosition) ? 0 : -Constants.MOVE_SPEED;
+
+    }
+
+    public float CalculateYVector()
+    {
+        throw new NotImplementedException();
     }
 }

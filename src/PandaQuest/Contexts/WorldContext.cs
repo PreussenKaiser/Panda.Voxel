@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using PandaQuest.Generators;
 using PandaQuest.Input;
+using PandaQuest.Input.Movement;
 using PandaQuest.Physics;
 using PandaQuest.Time;
 
@@ -24,8 +25,12 @@ public sealed class WorldContext
 
     public void Update(GameTime gameTime)
     {
+        var movement = new GroundedMovement();
+        var moveVector = movement.GetInput();
+
         this.Generation.Generate();
-        this.Player.Update(gameTime);
-        this.physics.Update(this.Player, this.Generation.Blocks);
+        this.physics.Update(this.Generation.Blocks, this.Player.Position, ref moveVector);
+
+        this.Player.MoveVector = moveVector;
     }
 }
