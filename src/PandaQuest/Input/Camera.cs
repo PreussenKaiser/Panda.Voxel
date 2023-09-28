@@ -1,52 +1,50 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using PandaQuest.Input.CameraInput;
 
 namespace PandaQuest.Input;
 
 public sealed class Camera
 {
+    public readonly Matrix Projection;
+
+    private readonly MouseInput input;
+
     private Vector3 position;
     private Vector3 target;
     private Vector3 rotation;
 
-    public Camera(GraphicsDevice graphicsDevice, Vector3 position)
+    public Camera(MouseInput input, Vector3 position, float aspectRatio)
     {
+        this.input = input;
         this.position = position;
-        
-        this.ScreenCenter = new Vector2(
-            graphicsDevice.Viewport.Width / 2,
-            graphicsDevice.Viewport.Height / 2);
 
         this.Projection = Matrix.CreatePerspectiveFieldOfView(
-            MathHelper.ToRadians(Constants.FIELD_OF_VIEW),
-            graphicsDevice.DisplayMode.AspectRatio,
-            .1f, 1000);
+            MathHelper.ToRadians(Constants.FIELD_OF_VIEW), aspectRatio, .1f, 1000);
     }
 
-    public Vector2 ScreenCenter { get; }
-
-    public Matrix Projection { get; }
+    public Vector3 Position => this.position;
 
     public Matrix View => Matrix.CreateLookAt(this.position, this.target, Vector3.Up);
 
-    public Vector3 PreviewMove(Vector3 moveVector)
+    public void MoveTo(Vector3 position, GameTime gameTime)
     {
-        Matrix rotationMatrix = Matrix.CreateRotationY(this.rotation.Y);
-        Vector3 moveTransform = Vector3.Transform(moveVector, rotationMatrix);
-
-        return this.position + moveTransform;
+        this.SetPosition(position);
+        this.SetRotation(this.input.CheckRotation(gameTime));
     }
 
-    public void SetPosition(Vector3 position)
+    private void SetRotation(Vector3 position)
     {
-        this.position = this.PreviewMove(position);
+        this.rotation = position;
 
         this.UpdateTarget();
     }
 
-    public void SetRotation(Vector3 rotation)
+    private void SetPosition(Vector3 position)
     {
-        this.rotation = rotation;
+        Matrix rotationMatrix = Matrix.CreateRotationY(this.rotation.Y);
+        Vector3 moveTransform = Vector3.Transform(position, rotationMatrix);
+
+        this.position += moveTransform;
 
         this.UpdateTarget();
     }

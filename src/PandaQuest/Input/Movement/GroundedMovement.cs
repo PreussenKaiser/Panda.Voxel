@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using PandaQuest.States;
 
 namespace PandaQuest.Input.Movement;
 
 public sealed class GroundedMovement : IMovement
 {
-    public Vector3 GetInput()
+    public Vector3 GetInput(PlayerState playerState)
     {
         Vector3 moveVector = Vector3.Zero;
         KeyboardState keyboardState = Keyboard.GetState();
@@ -30,9 +31,9 @@ public sealed class GroundedMovement : IMovement
             moveVector.X = -Constants.MOVE_SPEED;
         }
 
-        if (keyboardState.IsKeyDown(Keys.Space))
+        if (keyboardState.IsKeyDown(Keys.Space) && !playerState.IsFalling)
         {
-            moveVector.Y = 1;
+            moveVector.Y = 1.5f;
         }
 
         return moveVector;

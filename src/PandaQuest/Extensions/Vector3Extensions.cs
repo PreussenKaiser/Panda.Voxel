@@ -82,4 +82,9 @@ public static class Vector3Extensions
 
         return faces;
     }
+
+    public static bool IsDescending(this Vector3 vector)
+    {
+        return vector.Y < 0;
+    }
 }
