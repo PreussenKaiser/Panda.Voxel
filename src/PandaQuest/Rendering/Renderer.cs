@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using PandaQuest.Input;
 using PandaQuest.Models;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PandaQuest.Rendering;
 

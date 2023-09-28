@@ -83,7 +83,7 @@ public sealed class GameContext : Game
         this.world = new WorldContext(
             player,
             new PhysicsProvider(),
-            new TestWorldGenerator(),
+            new InfiniteWorldGenerator(player),
             new OverworldTimeProvider());
     }
 }

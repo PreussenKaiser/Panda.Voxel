@@ -33,7 +33,7 @@ public sealed class GroundedMovement : IMovement
 
         if (keyboardState.IsKeyDown(Keys.Space) && !playerState.IsFalling)
         {
-            moveVector.Y = 1.5f;
+            moveVector.Y = 2;
         }
 
         return moveVector;

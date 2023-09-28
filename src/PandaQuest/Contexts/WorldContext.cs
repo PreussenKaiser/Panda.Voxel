@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using PandaQuest.Generators;
 using PandaQuest.Input;
-using PandaQuest.Input.Movement;
 using PandaQuest.Physics;
 using PandaQuest.Time;
 

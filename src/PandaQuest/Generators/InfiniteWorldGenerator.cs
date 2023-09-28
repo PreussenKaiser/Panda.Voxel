@@ -1,19 +1,26 @@
-﻿using Microsoft.Xna.Framework;
+﻿using PandaQuest.Input;
 using PandaQuest.Models;
+using System.Numerics;
 
 namespace PandaQuest.Generators;
 
-public sealed class TestWorldGenerator : IWorldGenerator
+public sealed class InfiniteWorldGenerator : IWorldGenerator
 {
+    private readonly Player player;
     private readonly List<Block> blocks;
+    private readonly List<Chunk> loadedChunks;
+
     private bool generated;
 
-    public TestWorldGenerator()
+    public InfiniteWorldGenerator(Player player)
     {
+        this.player = player;
         this.blocks = new List<Block>();
+
+        this.Initialize();
     }
 
-    public IEnumerable<Block> Blocks => blocks;
+    public IEnumerable<Block> Blocks => this.blocks;
 
     public void Generate()
     {
@@ -22,6 +29,11 @@ public sealed class TestWorldGenerator : IWorldGenerator
             return;
         }
 
+        this.generated = true;
+    }
+
+    private void Initialize()
+    {
         for (var x = 0; x < Constants.CHUNK_SIZE; x++)
         {
             for (var z = 0; z < Constants.CHUNK_SIZE; z++)
@@ -32,11 +44,5 @@ public sealed class TestWorldGenerator : IWorldGenerator
                 this.blocks.Add(block);
             }
         }
-
-        this.blocks.Add(new Block(new Vector3(-1, -1, 0)));
-        this.blocks.Add(new Block(new Vector3(0, 1, 0)));
-        // this.blocks.Add(new Block(new Vector3(0, 2, 0)));
-
-        this.generated = true;
     }
 }

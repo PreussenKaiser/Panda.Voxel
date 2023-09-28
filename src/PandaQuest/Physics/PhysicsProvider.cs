@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using PandaQuest.Input;
 using PandaQuest.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PandaQuest.Physics;
 
@@ -12,22 +9,48 @@ public sealed class PhysicsProvider
     public void Update(IEnumerable<Block> blocks, Player player, GameTime gameTime)
     {
         var playerPositionCeiling = new Vector3(
-            (float)Math.Ceiling(player.Position.X),
-            (float)Math.Ceiling(player.Position.Y),
+            (float)Math.Round(player.Position.X),
+            (float)Math.Round(player.Position.Y),
             (float)Math.Ceiling(player.Position.Z));
 
-        var aboveBlockPosition = new Vector3(playerPositionCeiling.X, playerPositionCeiling.Y + 2, playerPositionCeiling.Z);
-        var belowBlockPosition = new Vector3(playerPositionCeiling.X, playerPositionCeiling.Y, playerPositionCeiling.Z);
+        var moveVector = new Vector3(
+            CalculateXVector(playerPositionCeiling, blocks),
+            CalculateYVector(playerPositionCeiling, blocks),
+            CalculateZVector(playerPositionCeiling, player.MoveVector.Z, blocks));
 
-        float moveVectorY = blocks.Any(b => b.Position == belowBlockPosition) ? 0 : -Constants.MOVE_SPEED;
-
-        player.MoveTo(
-            new Vector3(0, moveVectorY, 0),
-            gameTime);
+        player.MoveTo(moveVector, gameTime);
     }
 
-    private float CalculateYVector(Vector3 position)
+    private static float CalculateXVector(Vector3 position, IEnumerable<Block> blocks)
     {
-        throw new NotImplementedException();
+        return 0;
+    }
+
+    private static float CalculateYVector(Vector3 position, IEnumerable<Block> blocks)
+    {
+        var aboveBlockPosition = new Vector3(position.X, position.Y + 2, position.Z);
+        var belowBlockPosition = new Vector3(position.X, position.Y, position.Z);
+
+        bool collision = blocks.Any(b => b.Position == belowBlockPosition);
+
+        if (!collision)
+        {
+            // STUFF
+        }
+        else
+        {
+
+        }
+
+        return collision ? 0 : -.1f;
+    }
+
+    private static float CalculateZVector(Vector3 position, float moveVectorZ, IEnumerable<Block> blocks)
+    {
+        var frontBlockPosition = new Vector3(position.X, position.Y, position.Z + 1);
+
+        bool collision = blocks.Any(b => b.Position == frontBlockPosition);
+
+        return collision ? 0 : moveVectorZ;
     }
 }
