@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Numerics;
 using PandaQuest.Extensions;
 using PandaQuest.Input;
 using PandaQuest.Models;
@@ -21,6 +21,12 @@ public sealed class InfiniteWorldGenerator : IWorldGenerator
 	public IEnumerable<Block> Blocks => this.activeChunks.SelectMany(a => a.Blocks);
 
 	public void Generate()
+	{
+		this.BuildTerrain();
+		this.BuildMesh();
+	}
+
+	private void BuildTerrain()
 	{
 		var playerPosition = this.player.Position.ToChunkPosition();
 		playerPosition.Round();
@@ -60,6 +66,18 @@ public sealed class InfiniteWorldGenerator : IWorldGenerator
 				}
 
 				this.LoadChunk(chunkPosition);
+			}
+		}
+	}
+
+	// TODO: Actually build a mesh.
+	private void BuildMesh()
+	{
+		foreach (Chunk chunk in this.activeChunks)
+		{
+			foreach (Block block in chunk.Blocks)
+			{
+				block.EnableFace(CubeFace.Top);
 			}
 		}
 	}

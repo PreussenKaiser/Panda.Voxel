@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using PandaQuest.Input.CameraInput;
+using PandaQuest.Models;
 
 namespace PandaQuest.Input;
 
@@ -26,7 +27,7 @@ public sealed class Camera
 
     public Matrix View => Matrix.CreateLookAt(this.position, this.target, Vector3.Up);
 
-    public void MoveTo(Vector3 position, GameTime gameTime)
+    public void MoveTo(Vector3 position, GameContextTime gameTime)
     {
         this.SetPosition(position);
         this.SetRotation(this.input.CheckRotation(gameTime));
