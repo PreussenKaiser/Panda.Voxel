@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Numerics;
 
 namespace PandaQuest.Models;
 
@@ -6,6 +6,7 @@ public sealed class Chunk
 {
 	public readonly Vector2 Position;
 
+	// TODO: Use a more optimized data structure.
 	private readonly List<Block> blocks;
 
 	public Chunk(Vector2 position)

@@ -1,5 +1,6 @@
 ﻿namespace PandaQuest;
 
+// TODO: Replace with settings/configuration.
 public static class Constants
 {
     public const float MOVE_SPEED = .1f;

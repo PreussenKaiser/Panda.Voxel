@@ -24,6 +24,10 @@
 		<PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
 	</ItemGroup>
 	
+	<ItemGroup>
+	  <ProjectReference Include="..\PanDI\PanDI.csproj" />
+	</ItemGroup>
+	
 	<Target Name="RestoreDotnetTools" BeforeTargets="Restore">
 		<Message Text="Restoring dotnet tools" Importance="High" />
 		<Exec Command="dotnet tool restore" />

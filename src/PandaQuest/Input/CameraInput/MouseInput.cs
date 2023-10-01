@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using PandaQuest.Models;
 
 namespace PandaQuest.Input.CameraInput;
 
@@ -17,7 +18,7 @@ public sealed class MouseInput
         this.fieldOfView = Constants.FIELD_OF_VIEW - .1f;
     }
 
-    public Vector3 CheckRotation(GameTime gameTime)
+    public Vector3 CheckRotation(GameContextTime gameTime)
     {
         MouseState currentMouseState = Mouse.GetState();
 
@@ -26,8 +27,8 @@ public sealed class MouseInput
             float deltaX = currentMouseState.X - this.screenCenter.X;
             float deltaY = currentMouseState.Y - this.screenCenter.Y;
 
-            this.mouseRotationBuffer.X -= .1f * deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            this.mouseRotationBuffer.Y -= .1f * deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            this.mouseRotationBuffer.X -= .1f * deltaX * (float)gameTime.ElapsedTime.TotalSeconds;
+            this.mouseRotationBuffer.Y -= .1f * deltaY * (float)gameTime.ElapsedTime.TotalSeconds;
 
             if (this.mouseRotationBuffer.Y < MathHelper.ToRadians(-this.fieldOfView))
             {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using PandaQuest.Extensions;
 using PandaQuest.Input.Movement;
+using PandaQuest.Models;
 using PandaQuest.States;
 
 namespace PandaQuest.Input;
@@ -22,20 +23,20 @@ public sealed class Player
         this.movement = movement;
     }
 
-    public Vector3 Position => new Vector3(
+    public Vector3 Position => new(
         this.camera.Position.X,
         this.camera.Position.Y - PLAYER_HEIGHT,
         this.camera.Position.Z);
 
     public Vector3 MoveVector => this.moveVector;
 
-    public void Update(GameTime gameTime)
+    public void Update(GameContextTime gameTime)
     {
         this.moveVector = this.movement.GetInput(this.State);
         this.MoveTo(this.moveVector, gameTime);
     }
 
-    public void MoveTo(Vector3 moveVector, GameTime gameTime)
+    public void MoveTo(Vector3 moveVector, GameContextTime gameTime)
     {
         this.moveVector = moveVector;
         this.State.IsFalling = moveVector.IsDescending();

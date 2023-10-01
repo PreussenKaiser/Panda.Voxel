@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using PandaQuest.Generators;
+﻿using PandaQuest.Generators;
 using PandaQuest.Input;
+using PandaQuest.Models;
 using PandaQuest.Physics;
 using PandaQuest.Time;
 
@@ -8,24 +8,25 @@ namespace PandaQuest.Contexts;
 
 public sealed class WorldContext
 {
-    public readonly IWorldGenerator Generation;
+	private readonly Player player;
+	private readonly IPhysics physics;
+	private readonly IWorldGenerator generation;
+	private readonly ITimeProvider timeProvider;
 
-    private readonly Player player;
-    private readonly PhysicsProvider physics;
-    private readonly ITimeProvider timeProvider;
+	public WorldContext(Player player, IPhysics physics, IWorldGenerator worldGenerator, ITimeProvider timeProvider)
+	{
+		this.player = player;
+		this.physics = physics;
+		this.generation = worldGenerator;
+		this.timeProvider = timeProvider;
+	}
 
-    public WorldContext(Player player, PhysicsProvider physicsProvider, IWorldGenerator worldGenerator, ITimeProvider timeProvider)
-    {
-        this.player = player;
-        this.physics = physicsProvider;
-        this.Generation = worldGenerator;
-        this.timeProvider = timeProvider;
-    }
+	public IEnumerable<Block> Blocks => this.generation.Blocks;
 
-    public void Update(GameTime gameTime)
-    {
-        this.Generation.Generate();
-        this.player.Update(gameTime);
-        this.physics.Update(this.Generation.Blocks, this.player, gameTime);
-    }
+	public void Update(GameContextTime gameTime)
+	{
+		this.generation.Generate();
+		this.player.Update(gameTime);
+		this.physics.Update(this.generation.Blocks, this.player, gameTime);
+	}
 }

@@ -8,6 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B1550BE4-8893-4066-B615-4009AF80998B}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaQuest.Tests", "PandaQuest.Tests\PandaQuest.Tests.csproj", "{708DF93A-AED2-44DB-95F7-38127B031508}"
@@ -28,10 +30,17 @@ Global
 		{708DF93A-AED2-44DB-95F7-38127B031508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{708DF93A-AED2-44DB-95F7-38127B031508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{708DF93A-AED2-44DB-95F7-38127B031508}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{1D392E33-CF89-4B0C-83CA-F87EE0C05AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D392E33-CF89-4B0C-83CA-F87EE0C05AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D392E33-CF89-4B0C-83CA-F87EE0C05AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D392E33-CF89-4B0C-83CA-F87EE0C05AB3}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{F107A256-1436-4B9C-B7FE-96C221FD3B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F107A256-1436-4B9C-B7FE-96C221FD3B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F107A256-1436-4B9C-B7FE-96C221FD3B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F107A256-1436-4B9C-B7FE-96C221FD3B4D}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> 5aaa877d41f472e6def0c2260e8a3160eaaeb16f
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
