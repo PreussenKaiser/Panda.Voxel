@@ -1,48 +1,74 @@
-﻿using PandaQuest.Input;
+﻿using Microsoft.Xna.Framework;
+using PandaQuest.Extensions;
+using PandaQuest.Input;
 using PandaQuest.Models;
-using System.Numerics;
 
 namespace PandaQuest.Generators;
 
 public sealed class InfiniteWorldGenerator : IWorldGenerator
 {
-    private readonly Player player;
-    private readonly List<Block> blocks;
-    private readonly List<Chunk> loadedChunks;
+	private readonly Player player;
+	private readonly List<Chunk> activeChunks;
+	private readonly byte maxChunks;
 
-    private bool generated;
+	public InfiniteWorldGenerator(Player player)
+	{
+		this.player = player;
+		this.maxChunks = Constants.RENDER_DISTANCE * 2 + 1;
+		this.activeChunks = new List<Chunk>(this.maxChunks * this.maxChunks);
+	}
 
-    public InfiniteWorldGenerator(Player player)
-    {
-        this.player = player;
-        this.blocks = new List<Block>();
+	public IEnumerable<Block> Blocks => this.activeChunks.SelectMany(a => a.Blocks);
 
-        this.Initialize();
-    }
+	public void Generate()
+	{
+		var playerPosition = this.player.Position.ToChunkPosition();
+		playerPosition.Round();
 
-    public IEnumerable<Block> Blocks => this.blocks;
+		float chunkBoundX = playerPosition.X + Constants.RENDER_DISTANCE;
+		float chunkBoundNegativeX = playerPosition.X - Constants.RENDER_DISTANCE;
+		float chunkBoundY = playerPosition.Y + Constants.RENDER_DISTANCE;
+		float chunkBoundNegativeY = playerPosition.Y - Constants.RENDER_DISTANCE;
 
-    public void Generate()
-    {
-        if (this.generated)
-        {
-            return;
-        }
+		for (float x = chunkBoundX; x >= chunkBoundNegativeX; x--)
+		{
+			Chunk? removeChunkX = this.activeChunks.FirstOrDefault(
+				c => c.Position.X > chunkBoundX
+				|| c.Position.X < chunkBoundNegativeX);
 
-        this.generated = true;
-    }
+			if (removeChunkX is not null)
+			{
+				this.activeChunks.Remove(removeChunkX);
+			}
 
-    private void Initialize()
-    {
-        for (var x = 0; x < Constants.CHUNK_SIZE; x++)
-        {
-            for (var z = 0; z < Constants.CHUNK_SIZE; z++)
-            {
-                var position = new Vector3(x, 0, z);
-                var block = new Block(position);
+			for (float y = chunkBoundY; y >= chunkBoundNegativeY; y--)
+			{
+				Chunk? removeChunkY = this.activeChunks.FirstOrDefault(
+					c => c.Position.Y > chunkBoundY
+					|| c.Position.Y < chunkBoundNegativeY);
 
-                this.blocks.Add(block);
-            }
-        }
-    }
+				if (removeChunkY is not null)
+				{
+					this.activeChunks.Remove(removeChunkY);
+				}
+
+				var chunkPosition = new Vector2(x, y);
+
+				if (this.activeChunks.Any(c => c.Position == chunkPosition))
+				{
+					continue;
+				}
+
+				this.LoadChunk(chunkPosition);
+			}
+		}
+	}
+
+	private void LoadChunk(Vector2 position)
+	{
+		var newChunk = new Chunk(position);
+		newChunk.Load();
+
+		this.activeChunks.Add(newChunk);
+	}
 }

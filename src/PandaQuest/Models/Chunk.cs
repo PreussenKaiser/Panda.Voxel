@@ -4,19 +4,34 @@ namespace PandaQuest.Models;
 
 public sealed class Chunk
 {
-    private readonly Block[] blocks;
-    private readonly Vector3 position;
+	public readonly Vector2 Position;
 
-    public Chunk(Vector3 position)
-    {
-        const int maxBlocks = Constants.CHUNK_SIZE * Constants.CHUNK_SIZE;
+	private readonly List<Block> blocks;
 
-        this.blocks = new Block[maxBlocks];
-        this.position = position * Constants.CHUNK_SIZE;
-    }
+	public Chunk(Vector2 position)
+	{
+		this.blocks = new List<Block>();
+		this.Position = position;
+	}
 
-    public void Generate()
-    {
+	public IEnumerable<Block> Blocks => this.blocks;
 
-    }
+	public void Load()
+	{
+		float boundX = this.Position.X * Constants.CHUNK_SIZE;
+		float boundNegativeX = boundX - Constants.CHUNK_SIZE + 1;
+		float boundY = this.Position.Y * Constants.CHUNK_SIZE;
+		float boundNegativeY = boundY - Constants.CHUNK_SIZE + 1;
+
+		for (float x = boundX; x >= boundNegativeX; x--)
+		{
+			for (float y = boundY; y >= boundNegativeY; y--)
+			{
+				var blockPosition = new Vector3(x, 0, y);
+				var block = new Block(blockPosition);
+
+				this.blocks.Add(block);
+			}
+		}
+	}
 }
