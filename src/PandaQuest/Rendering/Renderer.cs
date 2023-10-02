@@ -31,7 +31,7 @@ public sealed class Renderer : IRenderer
 		this.effect.Projection = camera.Projection;
 		this.effect.View = camera.View;
 
-		foreach (var block in blocks)
+		foreach (Block block in blocks)
 		{
 			foreach (var face in block.Faces)
 			{

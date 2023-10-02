@@ -18,7 +18,7 @@ public sealed class InfiniteWorldGenerator : IWorldGenerator
 		this.activeChunks = new List<Chunk>(this.maxChunks * this.maxChunks);
 	}
 
-	public IEnumerable<Block> Blocks => this.activeChunks.SelectMany(a => a.Blocks);
+	public IEnumerable<Block> Blocks => this.activeChunks.SelectMany(a => a.Blocks.Values);
 
 	public void Generate()
 	{
@@ -29,7 +29,6 @@ public sealed class InfiniteWorldGenerator : IWorldGenerator
 	private void BuildTerrain()
 	{
 		var playerPosition = this.player.Position.ToChunkPosition();
-		playerPosition.Round();
 
 		float chunkBoundX = playerPosition.X + Constants.RENDER_DISTANCE;
 		float chunkBoundNegativeX = playerPosition.X - Constants.RENDER_DISTANCE;
@@ -73,11 +72,49 @@ public sealed class InfiniteWorldGenerator : IWorldGenerator
 	// TODO: Actually build a mesh.
 	private void BuildMesh()
 	{
-		foreach (Chunk chunk in this.activeChunks)
+		var blocksFlattened = (Dictionary<Vector3, Block>)this.activeChunks
+			.SelectMany(c => c.Blocks)
+			.ToDictionary(kv => kv.Key, kv => kv.Value);
+
+		foreach (var pair in blocksFlattened)
 		{
-			foreach (Block block in chunk.Blocks)
+			Block block = pair.Value;
+
+			bool topBlock = blocksFlattened.ContainsKey(new Vector3(block.Position.X, block.Position.Y + 1, block.Position.Z));
+			bool bottomBlock = blocksFlattened.ContainsKey(new Vector3(block.Position.X, block.Position.Y - 1, block.Position.Z));
+			bool leftBlock = blocksFlattened.ContainsKey(new Vector3(block.Position.X + 1, block.Position.Y, block.Position.Z));
+			bool rightBlock = blocksFlattened.ContainsKey(new Vector3(block.Position.X - 1, block.Position.Y, block.Position.Z));
+			bool frontBlock = blocksFlattened.ContainsKey(new Vector3(block.Position.X, block.Position.Y, block.Position.Z + 1));
+			bool backBlock = blocksFlattened.ContainsKey(new Vector3(block.Position.X, block.Position.Y, block.Position.Z - 1));
+
+			if (!topBlock)
 			{
 				block.EnableFace(CubeFace.Top);
+			}
+
+			if (!bottomBlock)
+			{
+				block.EnableFace(CubeFace.Bottom);
+			}
+
+			if (!leftBlock)
+			{
+				block.EnableFace(CubeFace.Left);
+			}
+
+			if (!rightBlock)
+			{
+				block.EnableFace(CubeFace.Right);
+			}
+
+			if (!frontBlock)
+			{
+				block.EnableFace(CubeFace.Front);
+			}
+
+			if (!backBlock)
+			{
+				block.EnableFace(CubeFace.Back);
 			}
 		}
 	}

@@ -33,7 +33,7 @@ public sealed class OverworldPhysics : IPhysics
 		var aboveBlockPosition = new Vector3(position.X, position.Y + 2, position.Z);
 		var belowBlockPosition = new Vector3(position.X, position.Y, position.Z);
 
-		bool collision = blocks.Any(b => b.Position == belowBlockPosition);
+		bool collision = blocks.Any(b => b is not null && b.Position == belowBlockPosition);
 
 		return collision ? 0 : -.1f;
 	}
@@ -44,7 +44,7 @@ public sealed class OverworldPhysics : IPhysics
 
 		var frontBlockPosition = new Vector3(position.X, position.Y, position.Z + 1);
 
-		bool collision = blocks.Any(b => b.Position == frontBlockPosition);
+		bool collision = blocks.Any(b => b is not null && b.Position == frontBlockPosition);
 
 		return collision ? 0 : moveVectorZ;
 	}
