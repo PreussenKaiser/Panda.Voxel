@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Collections.Concurrent;
+using System.Numerics;
 using PandaQuest.Extensions;
 using PandaQuest.Input;
 using PandaQuest.Models;
@@ -69,10 +70,9 @@ public sealed class InfiniteWorldGenerator : IWorldGenerator
 		}
 	}
 
-	// TODO: Actually build a mesh.
 	private void BuildMesh()
 	{
-		var blocksFlattened = (Dictionary<Vector3, Block>)this.activeChunks
+		var blocksFlattened = this.activeChunks
 			.SelectMany(c => c.Blocks)
 			.ToDictionary(kv => kv.Key, kv => kv.Value);
 

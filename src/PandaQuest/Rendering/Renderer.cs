@@ -22,6 +22,8 @@ public sealed class Renderer : IRenderer
 			TextureEnabled = true,
 			World = Matrix.Identity
 		};
+
+		this.graphicsDevice.SetVertexBuffer(this.vertexBuffer);
 	}
 
 	public void Draw(Camera camera, IEnumerable<Block> blocks)
@@ -31,22 +33,20 @@ public sealed class Renderer : IRenderer
 		this.effect.Projection = camera.Projection;
 		this.effect.View = camera.View;
 
-		foreach (Block block in blocks)
+		IEnumerable<BlockFace> faces = blocks.SelectMany(b => b.Faces);
+
+		foreach (BlockFace face in faces)
 		{
-			foreach (var face in block.Faces)
+			if (!face.IsVisible)
 			{
-				if (!face.IsVisible)
-				{
-					continue;
-				}
-
-				this.vertexBuffer.SetData(face.Vertices);
-		
-				this.graphicsDevice.SetVertexBuffer(this.vertexBuffer);
-				this.effect.CurrentTechnique.Passes[0].Apply();
-
-				this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
+				continue;
 			}
+
+			this.vertexBuffer.SetData(face.Vertices);
+				
+			this.effect.CurrentTechnique.Passes[0].Apply();
+
+			this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
 		}
 
 	}

@@ -18,7 +18,7 @@ public sealed class ChunkTests
 		// Act
 		chunk.Load();
 
-		Block cornerLeftBlock = chunk.Blocks.Last();
+		Block cornerLeftBlock = chunk.Blocks.Values.Last();
 		var actualPosition = new Vector2(cornerLeftBlock.Position.X, cornerLeftBlock.Position.Z);
 
 		// Assert
