@@ -1,7 +1,7 @@
 ﻿
 using PandaQuest.Contexts;
 
-using var game = GameContext
+using var game = Game
 	.CreateBuilder()
 	.Build();
 

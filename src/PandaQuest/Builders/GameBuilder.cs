@@ -23,7 +23,7 @@ public sealed class GameBuilder
 	public IGame Build()
 	{
 		ServiceProvider serviceProvider = this.Services.BuildProvider();
-		var game = new GameContext(serviceProvider);
+		var game = new Game(serviceProvider);
 
 		return game;
 	}

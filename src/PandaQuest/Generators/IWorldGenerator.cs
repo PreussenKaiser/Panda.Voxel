@@ -4,7 +4,7 @@ namespace PandaQuest.Generators;
 
 public interface IWorldGenerator
 {
-    IEnumerable<Block> Blocks { get; }
+	IEnumerable<Chunk> Chunks { get; }
 
     void Generate();
 }

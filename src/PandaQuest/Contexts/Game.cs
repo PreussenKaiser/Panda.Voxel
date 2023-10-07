@@ -14,16 +14,16 @@ using PanDI;
 
 namespace PandaQuest.Contexts;
 
-public sealed class GameContext : Game, IGame
+public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 {
 	private readonly ServiceProvider serviceProvider;
 	private readonly GraphicsDeviceManager graphics;
 
 	private Camera? camera;
-	private WorldContext? world;
+	private World? world;
 	private IRenderer? renderer;
 
-	public GameContext(ServiceProvider serviceProvider) : base()
+	public Game(ServiceProvider serviceProvider) : base()
 	{
 		this.serviceProvider = serviceProvider;
 		this.graphics = new GraphicsDeviceManager(this);
@@ -43,8 +43,6 @@ public sealed class GameContext : Game, IGame
 		this.InitializeCamera();
 		this.InitializeRendering();
 		this.InitializeWorld();
-
-		base.Initialize();
 	}
 
 	protected override void Update(GameTime gameTime)
@@ -54,19 +52,18 @@ public sealed class GameContext : Game, IGame
 			this.Exit();
 		}
 
-		this.world?.Update(gameTime.ToGameContextTime());
-
-		base.Update(gameTime);
+		if (this.world is not null)
+		{
+			this.world.Update(gameTime.ToGameContextTime());
+		}
 	}
 
 	protected override void Draw(GameTime gameTime)
 	{
 		if (this.camera is not null && this.world is not null)
 		{
-			this.renderer?.Draw(this.camera, this.world.Blocks);
+			this.renderer?.Draw(this.camera, this.world.Generation.Chunks);
 		}
-
-		base.Draw(gameTime);
 	}
 
 	private void InitializeCamera()
@@ -99,7 +96,7 @@ public sealed class GameContext : Game, IGame
 
 		var player = new Player(this.camera, new GroundedMovement());
 
-		this.world = new WorldContext(
+		this.world = new World(
 			player,
 			new OverworldPhysics(),
 			new InfiniteWorldGenerator(player),

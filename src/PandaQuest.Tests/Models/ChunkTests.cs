@@ -1,5 +1,5 @@
 ﻿using PandaQuest.Models;
-using System.Numerics;
+using Microsoft.Xna.Framework;
 
 namespace PandaQuest.Tests.Models;
 

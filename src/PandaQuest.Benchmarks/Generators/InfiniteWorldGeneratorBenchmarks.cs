@@ -7,6 +7,7 @@ using PandaQuest.Input.Movement;
 
 namespace PandaQuest.Benchmarks.Generators;
 
+[MemoryDiagnoser]
 public class InfiniteWorldGeneratorBenchmarks
 {
 	private readonly IWorldGenerator worldGenerator;
@@ -14,13 +15,8 @@ public class InfiniteWorldGeneratorBenchmarks
 
 	public InfiniteWorldGeneratorBenchmarks()
 	{
-		var mouseInput = new MouseInput(Vector2.Zero);
-		var camera = new Camera(mouseInput, Vector3.Zero, 0);
-		IMovement movement = new GroundedMovement();
-		var player = new Player(camera, movement);
-
-		this.worldGenerator = new InfiniteWorldGenerator(player);
-		this.player = player;
+		this.worldGenerator = Mocks.WorldGenerator;
+		this.player = Mocks.Player;
 	}
 
 	[Benchmark]

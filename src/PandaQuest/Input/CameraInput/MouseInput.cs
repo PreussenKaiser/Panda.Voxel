@@ -41,7 +41,7 @@ public sealed class MouseInput
             }
         }
 
-        Mouse.SetPosition((int)this.screenCenter.X, (int)this.screenCenter.Y);
+		Mouse.SetPosition((int)this.screenCenter.X, (int)this.screenCenter.Y);
 
         this.previousMouseState = currentMouseState;
 

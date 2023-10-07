@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaQuest.Tests", "PandaQu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaQuest.Benchmarks", "PandaQuest.Benchmarks\PandaQuest.Benchmarks.csproj", "{1D392E33-CF89-4B0C-83CA-F87EE0C05AB3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PanDI", "PanDI\PanDI.csproj", "{9F9F6665-B666-4EE7-B087-54080C68884F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,17 +32,14 @@ Global
 		{708DF93A-AED2-44DB-95F7-38127B031508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{708DF93A-AED2-44DB-95F7-38127B031508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{708DF93A-AED2-44DB-95F7-38127B031508}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{1D392E33-CF89-4B0C-83CA-F87EE0C05AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D392E33-CF89-4B0C-83CA-F87EE0C05AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D392E33-CF89-4B0C-83CA-F87EE0C05AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D392E33-CF89-4B0C-83CA-F87EE0C05AB3}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
-		{F107A256-1436-4B9C-B7FE-96C221FD3B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F107A256-1436-4B9C-B7FE-96C221FD3B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F107A256-1436-4B9C-B7FE-96C221FD3B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F107A256-1436-4B9C-B7FE-96C221FD3B4D}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> 5aaa877d41f472e6def0c2260e8a3160eaaeb16f
+		{9F9F6665-B666-4EE7-B087-54080C68884F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9F6665-B666-4EE7-B087-54080C68884F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9F6665-B666-4EE7-B087-54080C68884F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9F6665-B666-4EE7-B087-54080C68884F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

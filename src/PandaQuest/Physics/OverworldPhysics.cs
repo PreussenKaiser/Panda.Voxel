@@ -6,7 +6,7 @@ namespace PandaQuest.Physics;
 
 public sealed class OverworldPhysics : IPhysics
 {
-	public void Update(IEnumerable<Block> blocks, Player player, GameContextTime gameTime)
+	public void Update(IDictionary<Vector3, Block> blocks, Player player, GameContextTime gameTime)
 	{
 		var playerPositionCeiling = new Vector3(
 			(float)Math.Round(player.Position.X),
@@ -21,31 +21,32 @@ public sealed class OverworldPhysics : IPhysics
 		player.MoveTo(moveVector, gameTime);
 	}
 
-	private static float CalculateXVector(Vector3 position, IEnumerable<Block> blocks)
+	private static float CalculateXVector(Vector3 position, IDictionary<Vector3, Block> blocks)
 	{
 		// TODO: Finish
 
 		return 0;
 	}
 
-	private static float CalculateYVector(Vector3 position, IEnumerable<Block> blocks)
+	private static float CalculateYVector(Vector3 position, IDictionary<Vector3, Block> blocks)
 	{
-		var aboveBlockPosition = new Vector3(position.X, position.Y + 2, position.Z);
+		// TODO: Above block collision.
+		// var aboveBlockPosition = new Vector3(position.X, position.Y + 2, position.Z);
 		var belowBlockPosition = new Vector3(position.X, position.Y, position.Z);
 
-		bool collision = blocks.Any(b => b is not null && b.Position == belowBlockPosition);
+		bool collision = blocks.ContainsKey(belowBlockPosition);
 
 		return collision ? 0 : -.1f;
 	}
 
-	private static float CalculateZVector(Vector3 position, float moveVectorZ, IEnumerable<Block> blocks)
+	private static float CalculateZVector(Vector3 position, float moveVectorZ, IDictionary<Vector3, Block> blocks)
 	{
 		// TODO: Finish
 
-		var frontBlockPosition = new Vector3(position.X, position.Y, position.Z + 1);
+		// var frontBlockPosition = new Vector3(position.X, position.Y, position.Z + 1);
 
-		bool collision = blocks.Any(b => b is not null && b.Position == frontBlockPosition);
+		// bool collision = blocks.Any(b => b.Position == frontBlockPosition);
 
-		return collision ? 0 : moveVectorZ;
+		return 0; // collision ? 0 : moveVectorZ;
 	}
 }

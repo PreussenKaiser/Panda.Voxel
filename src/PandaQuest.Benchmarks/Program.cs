@@ -1,7 +1,6 @@
 ﻿using BenchmarkDotNet.Running;
 using PandaQuest.Benchmarks.Generators;
+using PandaQuest.Benchmarks.Physics;
 
 BenchmarkRunner.Run<InfiniteWorldGeneratorBenchmarks>();
-
-// For breakpoint.
-_ = 1;
+//BenchmarkRunner.Run<OverworldPhysicsBenchmarks>();
