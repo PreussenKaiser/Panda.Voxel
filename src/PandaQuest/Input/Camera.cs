@@ -13,14 +13,12 @@ public sealed class Camera
     private Vector3 position;
     private Vector3 target;
     private Vector3 rotation;
-	private Vector3 up;
 	private BoundingFrustum frustrum;
 
     public Camera(MouseInput input, Vector3 position, float aspectRatio)
     {
         this.input = input;
         this.position = position;
-		this.up = Vector3.Up;
 
         this.Projection = Matrix.CreatePerspectiveFieldOfView(
             MathHelper.ToRadians(Constants.FIELD_OF_VIEW), aspectRatio, .01f, 1000);
@@ -66,7 +64,6 @@ public sealed class Camera
         Vector3 targetOffset = Vector3.Transform(Vector3.UnitZ, rotationMatrix);
 
         this.target = this.position + targetOffset;
-		this.up = Vector3.Transform(Vector3.Up, rotationMatrix);
 		this.frustrum.Matrix = this.View * this.Projection;
     }
 }
