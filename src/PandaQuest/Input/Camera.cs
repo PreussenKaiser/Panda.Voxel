@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace PandaQuest.Input;
+﻿namespace PandaQuest.Input;
 
 public abstract class Camera
 {
-	
+	// TODO: Define camera abstraction.
 }
