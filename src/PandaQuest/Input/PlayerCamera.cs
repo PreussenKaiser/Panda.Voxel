@@ -1,22 +1,28 @@
 ﻿using Microsoft.Xna.Framework;
+using PandaQuest.Configuration;
 
 namespace PandaQuest.Input;
 
-public sealed class PlayerCamera
+public sealed class PlayerCamera : Camera
 {
 	public readonly Matrix Projection;
+	public readonly DisplayConfiguration Display;
+
+	private readonly BoundingFrustum frustum;
 
 	private Vector3 position;
 	private float yaw;
 	private float pitch;
-	private BoundingFrustum frustum;
 	private Matrix rotation;
 	private Matrix view;
 	private Vector3 up;
 	private Vector3 forward;
 
-	public PlayerCamera(Vector3 position, float aspectRatio)
+	public PlayerCamera(Vector3 position, DisplayConfiguration configuration)
 	{
+		this.Display = configuration;
+
+		var aspectRatio = (float)configuration.Width / (float)configuration.Height;
 		this.Projection = Matrix.CreatePerspectiveFieldOfView(
 			MathHelper.ToRadians(Constants.FIELD_OF_VIEW), aspectRatio, .01f, 1000);
 
@@ -74,7 +80,7 @@ public sealed class PlayerCamera
 		return this.frustum.Intersects(boundingBox);
 	}
 
-	public void Update(GameTime gameTime)
+	public void Update()
 	{
 		this.rotation = Matrix.CreateFromYawPitchRoll(this.yaw, this.pitch, 0);
 
@@ -83,5 +89,12 @@ public sealed class PlayerCamera
 
 		this.view = Matrix.CreateLookAt(this.position, this.position + this.forward, this.up);
 		this.frustum.Matrix = this.view * this.Projection;
+	}
+
+	public void MoveTo(Vector3 moveVector)
+	{
+		Vector3 moveTransform = Vector3.Transform(moveVector, this.rotation);
+
+		this.position += moveTransform;
 	}
 }

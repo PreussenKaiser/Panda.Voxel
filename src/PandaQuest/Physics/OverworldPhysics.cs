@@ -6,7 +6,7 @@ namespace PandaQuest.Physics;
 
 public sealed class OverworldPhysics : IPhysics
 {
-	public void Update(IDictionary<Vector3, Block> blocks, Player player, GameContextTime gameTime)
+	public void Update(IDictionary<Vector3, Block> blocks, Player player, GameTime gameTime)
 	{
 		var playerPositionCeiling = new Vector3(
 			(float)Math.Round(player.Position.X),
@@ -18,7 +18,7 @@ public sealed class OverworldPhysics : IPhysics
 			CalculateYVector(playerPositionCeiling, blocks),
 			CalculateZVector(playerPositionCeiling, player.MoveVector.Z, blocks));
 
-		player.MoveTo(moveVector, gameTime);
+		player.MoveTo(moveVector);
 	}
 
 	private static float CalculateXVector(Vector3 position, IDictionary<Vector3, Block> blocks)

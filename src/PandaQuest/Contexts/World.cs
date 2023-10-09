@@ -1,4 +1,5 @@
-﻿using PandaQuest.Extensions;
+﻿using Microsoft.Xna.Framework;
+using PandaQuest.Extensions;
 using PandaQuest.Generators;
 using PandaQuest.Input;
 using PandaQuest.Models;
@@ -26,10 +27,10 @@ public sealed class World
 	private Chunk CurrentChunk
 		=> this.Generation.Chunks.First(c => c.Position == this.player.Position.ToChunkPosition());
 
-	public void Update(GameContextTime gameTime)
+	public void Update(GameTime gameTime)
 	{
 		this.Generation.Generate();
-		this.player.Update(gameTime);
+		this.player.Update();
 		this.physics.Update(this.CurrentChunk.Blocks, this.player, gameTime);
 	}
 }
