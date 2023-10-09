@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Microsoft.Xna.Framework;
 using PandaQuest.Contexts;
-using PandaQuest.Models;
 
 namespace PandaQuest.Benchmarks.Contexts;
 
@@ -17,6 +17,6 @@ public class WorldContextBenchmarks
 	[Benchmark]
 	public void Update_World()
 	{
-		this.worldContext.Update(new GameContextTime());
+		this.worldContext.Update(new GameTime());
 	}
 }

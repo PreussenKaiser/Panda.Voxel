@@ -6,5 +6,5 @@ namespace PandaQuest.Physics;
 
 public interface IPhysics
 {
-	void Update(IDictionary<Vector3, Block> blocks, Player player, GameContextTime gameTime);
+	void Update(IDictionary<Vector3, Block> blocks, Player player, GameTime gameTime);
 }

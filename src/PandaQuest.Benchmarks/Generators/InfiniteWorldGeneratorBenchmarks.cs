@@ -1,9 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Microsoft.Xna.Framework;
 using PandaQuest.Generators;
 using PandaQuest.Input;
-using PandaQuest.Input.CameraInput;
-using PandaQuest.Input.Movement;
 
 namespace PandaQuest.Benchmarks.Generators;
 

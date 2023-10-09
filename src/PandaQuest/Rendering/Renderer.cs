@@ -21,7 +21,7 @@ public sealed class Renderer : IRenderer
 		this.graphicsDevice.SetVertexBuffer(this.vertexBuffer);
 	}
 
-	public void Draw(Camera camera, IEnumerable<Chunk> chunks)
+	public void Draw(PlayerCamera camera, IEnumerable<Chunk> chunks)
 	{
 		this.graphicsDevice.Clear(Color.CornflowerBlue);
 
@@ -30,7 +30,7 @@ public sealed class Renderer : IRenderer
 
 		foreach (Chunk chunk in chunks)
 		{
-			if (!camera.CanSee(chunk.BoundingBox))
+			if (!camera.IsVisible(chunk.BoundingBox))
 			{
 				continue;
 			}

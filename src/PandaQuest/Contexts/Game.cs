@@ -2,10 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using PandaQuest.Builders;
+using PandaQuest.Configuration;
 using PandaQuest.Extensions;
 using PandaQuest.Generators;
 using PandaQuest.Input;
-using PandaQuest.Input.CameraInput;
 using PandaQuest.Input.Movement;
 using PandaQuest.Physics;
 using PandaQuest.Rendering;
@@ -19,7 +19,7 @@ public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 	private readonly ServiceProvider serviceProvider;
 	private readonly GraphicsDeviceManager graphics;
 
-	private Camera? camera;
+	private PlayerCamera? camera;
 	private World? world;
 	private IRenderer? renderer;
 
@@ -52,10 +52,7 @@ public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 			this.Exit();
 		}
 
-		if (this.world is not null)
-		{
-			this.world.Update(gameTime.ToGameContextTime());
-		}
+		this.world?.Update(gameTime.ToGameContextTime());
 	}
 
 	protected override void Draw(GameTime gameTime)
@@ -68,14 +65,12 @@ public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 
 	private void InitializeCamera()
 	{
-		var mouseInput = new MouseInput(new Vector2(
-			this.GraphicsDevice.Viewport.Width / 2,
-			this.GraphicsDevice.Viewport.Height / 2));
+		var position = new Vector3(0, 8, 0);
+		var displayConfiguration = new DisplayConfiguration(
+			this.GraphicsDevice.Viewport.Width,
+			this.GraphicsDevice.Viewport.Height);
 
-		this.camera = new Camera(
-			mouseInput,
-			new Vector3(0, 8, 0),
-			this.GraphicsDevice.Viewport.AspectRatio);
+		this.camera = new PlayerCamera(position, displayConfiguration);
 	}
 
 	private void InitializeRendering()

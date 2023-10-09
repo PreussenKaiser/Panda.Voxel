@@ -5,5 +5,5 @@ namespace PandaQuest.Rendering;
 
 public interface IRenderer
 {
-	void Draw(Camera camera, IEnumerable<Chunk> chunks);
+	void Draw(PlayerCamera camera, IEnumerable<Chunk> chunks);
 }

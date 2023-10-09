@@ -30,6 +30,6 @@ public class OverworldPhysicsBenchmarks
 			.SelectMany(c => c.Blocks)
 			.ToDictionary(kv => kv.Key, kv => kv.Value);
 
-		this.physics.Update(blocks, this.player, new GameContextTime());
+		this.physics.Update(blocks, this.player, new GameTime());
 	}
 }

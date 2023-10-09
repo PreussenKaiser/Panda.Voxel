@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using PandaQuest.Configuration;
 using PandaQuest.Extensions;
+using PandaQuest.Input.Looking;
 using PandaQuest.Input.Movement;
-using PandaQuest.Models;
 using PandaQuest.States;
 
 namespace PandaQuest.Input;
@@ -12,15 +13,17 @@ public sealed class Player
 
     private const int PLAYER_HEIGHT = 2;
 
-    private readonly Camera camera;
     private readonly IMovement movement;
+	private readonly ILooking looking;
+	private readonly PlayerCamera camera;
 
     private Vector3 moveVector;
 
-    public Player(Camera camera, IMovement movement)
+    public Player(PlayerCamera camera, IMovement movement)
     {
-        this.camera = camera;
+		this.camera = camera;
         this.movement = movement;
+		this.looking = new MouseLooking(new MouseConfiguration(.001f));
     }
 
     public Vector3 Position => new(
@@ -30,17 +33,23 @@ public sealed class Player
 
     public Vector3 MoveVector => this.moveVector;
 
-    public void Update(GameContextTime gameTime)
-    {
-        this.moveVector = this.movement.GetInput(this.State);
-        this.MoveTo(this.moveVector, gameTime);
+    public void Update()
+	{
+		Vector3 moveVector = this.movement.GetInput(this.State);
+		this.MoveTo(moveVector);
+
+		var aspectRatio = new Vector2(this.camera.Display.Width, this.camera.Display.Height);
+		Vector2 input = this.looking.GetInput(aspectRatio);
+
+		this.camera.Rotate(input.X, input.Y);
+		this.camera.Update();
     }
 
-    public void MoveTo(Vector3 moveVector, GameContextTime gameTime)
+    public void MoveTo(Vector3 moveVector)
     {
-        this.moveVector = moveVector;
-        this.State.IsFalling = moveVector.IsDescending();
+		this.moveVector = moveVector;
+		this.State.IsFalling = moveVector.IsDescending();
 
-        this.camera.MoveTo(moveVector, gameTime);
-    }
+		this.camera.MoveTo(moveVector);
+	}
 }
