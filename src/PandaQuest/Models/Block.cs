@@ -4,10 +4,12 @@ namespace PandaQuest.Models;
 
 public readonly struct Block
 {
+	public readonly BlockIndex Id;
 	public readonly Vector3 Position;
 
-	public Block(Vector3 position)
+	public Block(BlockIndex id, Vector3 position)
 	{
+		this.Id = id;
 		this.Position = position;
 	}
 }

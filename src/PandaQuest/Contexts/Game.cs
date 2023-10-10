@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Panda.Noise.Gradient;
 using PandaQuest.Builders;
 using PandaQuest.Configuration;
 using PandaQuest.Extensions;
@@ -52,7 +53,7 @@ public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 			this.Exit();
 		}
 
-		this.world?.Update(gameTime.ToGameContextTime());
+		this.world?.Update(gameTime);
 	}
 
 	protected override void Draw(GameTime gameTime)
@@ -65,7 +66,7 @@ public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 
 	private void InitializeCamera()
 	{
-		var position = new Vector3(0, 8, 0);
+		var position = new Vector3(0, 130, 0);
 		var displayConfiguration = new DisplayConfiguration(
 			this.GraphicsDevice.Viewport.Width,
 			this.GraphicsDevice.Viewport.Height);
@@ -89,12 +90,14 @@ public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 			return;
 		}
 
-		var player = new Player(this.camera, new GroundedMovement());
+		const int PLACEHOLDER_SEED = 0;
 
-		this.world = new World(
-			player,
-			new OverworldPhysics(),
-			new InfiniteWorldGenerator(player),
-			new OverworldTimeProvider());
+		var player = new Player(this.camera, new GroundedMovement());
+		var physics = new OverworldPhysics();
+		var noise = new GradientNoise2(PLACEHOLDER_SEED);
+		var generator = new InfiniteWorldGenerator(player, noise);
+		var time = new OverworldTimeProvider();
+
+		this.world = new World(player, physics, generator, time);
 	}
 }

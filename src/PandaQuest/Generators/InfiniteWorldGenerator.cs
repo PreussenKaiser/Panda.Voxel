@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Panda.Noise.Abstractions;
 using PandaQuest.Extensions;
 using PandaQuest.Input;
 using PandaQuest.Models;
@@ -9,10 +10,12 @@ public sealed class InfiniteWorldGenerator : IWorldGenerator
 {
 	private readonly Player player;
 	private readonly List<Chunk> activeChunks;
+	private readonly INoise noise;
 
-	public InfiniteWorldGenerator(Player player)
+	public InfiniteWorldGenerator(Player player, INoise noise)
 	{
 		this.player = player;
+		this.noise = noise;
 
 		byte maxChunks = Constants.RENDER_DISTANCE * 2 + 1;
 		this.activeChunks = new List<Chunk>(maxChunks * maxChunks);
@@ -59,7 +62,7 @@ public sealed class InfiniteWorldGenerator : IWorldGenerator
 	private void LoadChunk(Vector2 position)
 	{
 		var newChunk = new Chunk(position);
-		newChunk.Load();
+		newChunk.Load(this.noise);
 
 		this.activeChunks.Add(newChunk);
 	}

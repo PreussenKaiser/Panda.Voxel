@@ -2,6 +2,9 @@
 
 namespace Panda.Noise.Gradient;
 
+/// <summary>
+/// Custom 2d gradient noise.
+/// </summary>
 public sealed class GradientNoise2 : INoise
 {
 	private readonly Random random;
