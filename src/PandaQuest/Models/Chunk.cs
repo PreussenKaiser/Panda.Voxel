@@ -41,7 +41,7 @@ public sealed class Chunk
 					if (blockIndex != BlockIndex.Air)
 					{
 						var blockPosition = new Vector3(translatedX, y, translatedZ);
-						var block = new Block(blockIndex, blockPosition);
+						var block = new Block(blockIndex);
 
 						this.blocks.Add(blockPosition, block);
 					}

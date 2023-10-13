@@ -84,7 +84,7 @@ public sealed class PlayerCamera : Camera
 	{
 		this.rotation = Matrix.CreateFromYawPitchRoll(this.yaw, this.pitch, 0);
 
-		this.forward = Vector3.Transform(Vector3.UnitZ, this.rotation);
+		this.forward = Vector3.Transform(Vector3.Forward, this.rotation);
 		this.up = Vector3.Transform(Vector3.Up, this.rotation);
 
 		this.view = Matrix.CreateLookAt(this.position, this.position + this.forward, this.up);

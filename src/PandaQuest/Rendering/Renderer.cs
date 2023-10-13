@@ -28,6 +28,8 @@ public sealed class Renderer : IRenderer
 		this.effect.Projection = camera.Projection;
 		this.effect.View = camera.View;
 
+		IDictionary<Vector3, Block> blocks = chunks.SelectMany(c => c.Blocks);
+
 		foreach (Chunk chunk in chunks)
 		{
 			if (!camera.IsVisible(chunk.BoundingBox))

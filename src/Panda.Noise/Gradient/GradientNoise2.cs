@@ -16,6 +16,6 @@ public sealed class GradientNoise2 : INoise
 
 	public int GetValue(int x, int y)
 	{
-		throw new NotImplementedException();
+		return 1;
 	}
 }

@@ -6,5 +6,5 @@ public interface IWorldGenerator
 {
 	IEnumerable<Chunk> Chunks { get; }
 
-    void Generate();
+	void Generate();
 }

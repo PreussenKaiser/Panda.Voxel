@@ -19,6 +19,8 @@ public static class MeshGenerator
 			bool frontBlock = blocks.ContainsKey(new Vector3(position.X, position.Y, position.Z + 1));
 			bool backBlock = blocks.ContainsKey(new Vector3(position.X, position.Y, position.Z - 1));
 
+			blocks.TryGetValue(new Vector3(position.X, position.Y, position.Z + 1), out Block goober);
+
 			if (!topBlock)
 			{
 				yield return new BlockFace(position.ToTopFace());

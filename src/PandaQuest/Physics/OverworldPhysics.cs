@@ -6,6 +6,7 @@ namespace PandaQuest.Physics;
 
 public sealed class OverworldPhysics : IPhysics
 {
+	// TODO: Only calculate physics against mesh.
 	public void Update(IDictionary<Vector3, Block> blocks, Player player, GameTime gameTime)
 	{
 		var playerPositionCeiling = new Vector3(
