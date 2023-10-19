@@ -6,7 +6,7 @@ using PandaQuest.Models;
 
 namespace PandaQuest.Rendering;
 
-public sealed class Renderer : IRenderer
+public sealed class Renderer
 {
 	private readonly GraphicsDevice graphicsDevice;
 	private readonly BasicEffect effect;
@@ -27,17 +27,17 @@ public sealed class Renderer : IRenderer
 
 		foreach (var chunk in chunks)
 		{
-			IEnumerable<BlockFace> mesh = MeshGenerator.Generate(chunk.Blocks);
+			VertexPositionTexture[] vertices = MeshGenerator
+				.Generate(chunk.Blocks)
+				.SelectMany(f => f.Vertices)
+				.ToArray();
 
-			foreach (BlockFace face in mesh)
-			{
-				using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, face.Vertices.Length, BufferUsage.WriteOnly);
-				buffer.SetData(face.Vertices, 0, face.Vertices.Length);
+			using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+			buffer.SetData(vertices, 0, vertices.Length);
 			
-				this.graphicsDevice.SetVertexBuffer(buffer);
-				
-				this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
-			}
+			this.graphicsDevice.SetVertexBuffer(buffer);
+			
+			this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, vertices.Length);
 		}
 	}
 }

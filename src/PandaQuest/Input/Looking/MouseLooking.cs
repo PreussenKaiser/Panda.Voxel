@@ -4,7 +4,7 @@ using PandaQuest.Configuration;
 
 namespace PandaQuest.Input.Looking;
 
-public sealed class MouseLooking : ILooking
+public sealed class MouseLooking
 {
 	private readonly MouseConfiguration configuration;
 

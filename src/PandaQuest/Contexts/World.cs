@@ -9,12 +9,12 @@ namespace PandaQuest.Contexts;
 
 public sealed class World
 {
-	public readonly IWorldGenerator Generation;
+	public readonly InfiniteWorldGenerator Generation;
 
 	private readonly Player player;
-	private readonly IPhysics physics;
+	private readonly OverworldPhysics physics;
 
-	public World(Player player, IPhysics physics, IWorldGenerator worldGenerator)
+	public World(Player player, OverworldPhysics physics, InfiniteWorldGenerator worldGenerator)
 	{
 		this.player = player;
 		this.physics = physics;

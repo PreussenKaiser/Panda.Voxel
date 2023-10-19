@@ -9,7 +9,6 @@ public sealed class Chunk
 	public readonly Vector2 Position;
 	public readonly BoundingBox BoundingBox;
 	private readonly BlockCollection blocks;
-	private readonly List<BlockFace> mesh;
 
 	public Chunk(Vector2 position)
 	{
@@ -19,12 +18,9 @@ public sealed class Chunk
 			new Vector3(GetOffset(position.X), Constants.WORLD_HEIGHT + 1, GetOffset(position.Y) + Constants.CHUNK_SIZE));
 
 		this.blocks = new BlockCollection(new WorldConfiguration(Constants.CHUNK_SIZE, Constants.WORLD_HEIGHT));
-		this.mesh = new List<BlockFace>();
 	}
 
 	public BlockCollection Blocks => this.blocks;
-
-	public IEnumerable<BlockFace> Mesh => this.mesh;
 
 	public void Load(INoise noise)
 	{
@@ -33,7 +29,7 @@ public sealed class Chunk
 		
 		for (var x = 0; x < Constants.CHUNK_SIZE; x++)
 		{
-			for (var y = 0; y < Constants.WORLD_HEIGHT; y++)
+			for (var y = 0; y < 0; y++)
 			{
 				for (var z = 0; z < Constants.CHUNK_SIZE; z++)
 				{

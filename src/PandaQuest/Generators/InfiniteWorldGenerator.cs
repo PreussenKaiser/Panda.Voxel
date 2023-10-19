@@ -6,7 +6,7 @@ using PandaQuest.Models;
 
 namespace PandaQuest.Generators;
 
-public sealed class InfiniteWorldGenerator : IWorldGenerator
+public sealed class InfiniteWorldGenerator
 {
 	private readonly Player player;
 	private readonly List<Chunk> activeChunks;

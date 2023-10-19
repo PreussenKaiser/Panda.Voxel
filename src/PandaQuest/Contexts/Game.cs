@@ -7,19 +7,18 @@ using PandaQuest.Extensions;
 using PandaQuest.Generators;
 using PandaQuest.Input;
 using PandaQuest.Input.Movement;
-using PandaQuest.Models;
 using PandaQuest.Physics;
 using PandaQuest.Rendering;
 
 namespace PandaQuest.Contexts;
 
-public sealed class Game : Microsoft.Xna.Framework.Game, IGame
+public sealed class Game : Microsoft.Xna.Framework.Game
 {
 	private readonly GraphicsDeviceManager graphics;
 
 	private PlayerCamera? camera;
 	private World? world;
-	private IRenderer? renderer;
+	private Renderer? renderer;
 
 	public Game() : base()
 	{

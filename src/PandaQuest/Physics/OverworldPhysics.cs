@@ -4,7 +4,7 @@ using PandaQuest.Models;
 
 namespace PandaQuest.Physics;
 
-public sealed class OverworldPhysics : IPhysics
+public sealed class OverworldPhysics
 {
 	// TODO: Only calculate physics against mesh.
 	public void Update(BlockCollection blocks, Player player, GameTime gameTime)
