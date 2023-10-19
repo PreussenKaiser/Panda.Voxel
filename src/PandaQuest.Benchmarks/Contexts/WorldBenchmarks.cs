@@ -5,11 +5,11 @@ using PandaQuest.Contexts;
 namespace PandaQuest.Benchmarks.Contexts;
 
 [MemoryDiagnoser]
-public class WorldContextBenchmarks
+public class WorldBenchmarks
 {
 	private readonly World worldContext;
 
-	public WorldContextBenchmarks()
+	public WorldBenchmarks()
 	{
 		this.worldContext = Mocks.WorldContext;
 	}

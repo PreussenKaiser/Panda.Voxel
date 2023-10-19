@@ -1,8 +1,5 @@
-﻿
-using PandaQuest.Contexts;
+﻿using PandaQuest.Contexts;
 
-using var game = Game
-	.CreateBuilder()
-	.Build();
+using var game = new Game();
 
 game.Run();

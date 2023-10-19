@@ -7,7 +7,7 @@ namespace PandaQuest.Physics;
 public sealed class OverworldPhysics : IPhysics
 {
 	// TODO: Only calculate physics against mesh.
-	public void Update(IDictionary<Vector3, Block> blocks, Player player, GameTime gameTime)
+	public void Update(BlockCollection blocks, Player player, GameTime gameTime)
 	{
 		var playerPositionCeiling = new Vector3(
 			(float)Math.Round(player.Position.X),
@@ -22,25 +22,25 @@ public sealed class OverworldPhysics : IPhysics
 		player.MoveTo(moveVector);
 	}
 
-	private static float CalculateXVector(Vector3 position, IDictionary<Vector3, Block> blocks)
+	private static float CalculateXVector(Vector3 position, BlockCollection blocks)
 	{
 		// TODO: Finish
 
 		return 0;
 	}
 
-	private static float CalculateYVector(Vector3 position, IDictionary<Vector3, Block> blocks)
+	private static float CalculateYVector(Vector3 position, BlockCollection blocks)
 	{
 		// TODO: Above block collision.
 		// var aboveBlockPosition = new Vector3(position.X, position.Y + 2, position.Z);
 		var belowBlockPosition = new Vector3(position.X, position.Y, position.Z);
 
-		bool collision = blocks.ContainsKey(belowBlockPosition);
+		bool collision = !blocks.IsEmpty(belowBlockPosition);
 
 		return collision ? 0 : -.1f;
 	}
 
-	private static float CalculateZVector(Vector3 position, float moveVectorZ, IDictionary<Vector3, Block> blocks)
+	private static float CalculateZVector(Vector3 position, float moveVectorZ, BlockCollection blocks)
 	{
 		// TODO: Finish
 

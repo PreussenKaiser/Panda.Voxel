@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Panda.Noise.Abstractions;
+using PandaQuest.Configuration;
 
 namespace PandaQuest.Models;
 
@@ -7,8 +8,8 @@ public sealed class Chunk
 {
 	public readonly Vector2 Position;
 	public readonly BoundingBox BoundingBox;
-
-	private readonly IDictionary<Vector3, Block> blocks;
+	private readonly BlockCollection blocks;
+	private readonly List<BlockFace> mesh;
 
 	public Chunk(Vector2 position)
 	{
@@ -17,10 +18,13 @@ public sealed class Chunk
 			new Vector3(GetOffset(position.X) + Constants.CHUNK_SIZE, -1, GetOffset(position.Y)),
 			new Vector3(GetOffset(position.X), Constants.WORLD_HEIGHT + 1, GetOffset(position.Y) + Constants.CHUNK_SIZE));
 
-		this.blocks = new Dictionary<Vector3, Block>();
+		this.blocks = new BlockCollection(new WorldConfiguration(Constants.CHUNK_SIZE, Constants.WORLD_HEIGHT));
+		this.mesh = new List<BlockFace>();
 	}
 
-	public IDictionary<Vector3, Block> Blocks => this.blocks;
+	public BlockCollection Blocks => this.blocks;
+
+	public IEnumerable<BlockFace> Mesh => this.mesh;
 
 	public void Load(INoise noise)
 	{
@@ -36,14 +40,13 @@ public sealed class Chunk
 					int translatedX = x + xOffset;
 					int translatedZ = z + zOffset;
 
-					var blockIndex = GetBlock(noise, translatedX, y, translatedZ);
+					BlockIndex blockIndex = GetBlock(noise, translatedX, y, translatedZ);
 
 					if (blockIndex != BlockIndex.Air)
 					{
-						var blockPosition = new Vector3(translatedX, y, translatedZ);
 						var block = new Block(blockIndex);
 
-						this.blocks.Add(blockPosition, block);
+						this.blocks[x, y, z] = block;
 					}
 				}
 			}

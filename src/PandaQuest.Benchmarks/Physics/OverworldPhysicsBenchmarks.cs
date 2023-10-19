@@ -26,9 +26,7 @@ public class OverworldPhysicsBenchmarks
 	[Benchmark]
 	public void Update_Physics()
 	{
-		IDictionary<Vector3, Block> blocks = this.generator.Chunks
-			.SelectMany(c => c.Blocks)
-			.ToDictionary(kv => kv.Key, kv => kv.Value);
+		BlockCollection blocks = this.generator.Chunks.SelectMany(c => c.Blocks);
 
 		this.physics.Update(blocks, this.player, new GameTime());
 	}

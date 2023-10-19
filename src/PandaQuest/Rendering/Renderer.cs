@@ -9,42 +9,33 @@ namespace PandaQuest.Rendering;
 public sealed class Renderer : IRenderer
 {
 	private readonly GraphicsDevice graphicsDevice;
-	private readonly DynamicVertexBuffer vertexBuffer;
 	private readonly BasicEffect effect;
 
 	public Renderer(GraphicsDevice graphicsDevice, Texture2D texture)
 	{
 		this.graphicsDevice = graphicsDevice;
-		this.vertexBuffer = new DynamicVertexBuffer(this.graphicsDevice, typeof(VertexPositionTexture), (int)2e4, BufferUsage.WriteOnly);
-		this.effect = new BasicEffect(graphicsDevice) { TextureEnabled = true };
-
-		this.graphicsDevice.SetVertexBuffer(this.vertexBuffer);
+		this.effect = new BasicEffect(graphicsDevice){ TextureEnabled = true, Texture =  texture };
 	}
 
 	public void Draw(PlayerCamera camera, IEnumerable<Chunk> chunks)
 	{
 		this.graphicsDevice.Clear(Color.CornflowerBlue);
+		this.effect.CurrentTechnique.Passes[0].Apply();
 
 		this.effect.Projection = camera.Projection;
 		this.effect.View = camera.View;
 
-		IDictionary<Vector3, Block> blocks = chunks.SelectMany(c => c.Blocks);
-
-		foreach (Chunk chunk in chunks)
+		foreach (var chunk in chunks)
 		{
-			if (!camera.IsVisible(chunk.BoundingBox))
-			{
-				continue;
-			}
-
 			IEnumerable<BlockFace> mesh = MeshGenerator.Generate(chunk.Blocks);
 
 			foreach (BlockFace face in mesh)
 			{
-				this.vertexBuffer.SetData(face.Vertices);
+				using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, face.Vertices.Length, BufferUsage.WriteOnly);
+				buffer.SetData(face.Vertices, 0, face.Vertices.Length);
+			
+				this.graphicsDevice.SetVertexBuffer(buffer);
 				
-				this.effect.CurrentTechnique.Passes[0].Apply();
-
 				this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
 			}
 		}

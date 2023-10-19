@@ -2,41 +2,30 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Panda.Noise.Gradient;
-using PandaQuest.Builders;
 using PandaQuest.Configuration;
 using PandaQuest.Extensions;
 using PandaQuest.Generators;
 using PandaQuest.Input;
 using PandaQuest.Input.Movement;
+using PandaQuest.Models;
 using PandaQuest.Physics;
 using PandaQuest.Rendering;
-using PandaQuest.Time;
-using PanDI;
 
 namespace PandaQuest.Contexts;
 
 public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 {
-	private readonly ServiceProvider serviceProvider;
 	private readonly GraphicsDeviceManager graphics;
 
 	private PlayerCamera? camera;
 	private World? world;
 	private IRenderer? renderer;
 
-	public Game(ServiceProvider serviceProvider) : base()
+	public Game() : base()
 	{
-		this.serviceProvider = serviceProvider;
 		this.graphics = new GraphicsDeviceManager(this);
 
 		this.Content.RootDirectory = "Content";
-	}
-
-	public static GameBuilder CreateBuilder()
-	{
-		var gameBuilder = new GameBuilder();
-
-		return gameBuilder;
 	}
 
 	protected override void Initialize()
@@ -66,7 +55,7 @@ public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 
 	private void InitializeCamera()
 	{
-		var position = new Vector3(0, 130, 0);
+		var position = new Vector3(0, 128, 0);
 		var displayConfiguration = new DisplayConfiguration(
 			this.GraphicsDevice.Viewport.Width,
 			this.GraphicsDevice.Viewport.Height);
@@ -78,7 +67,7 @@ public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 	{
 		this.GraphicsDevice.Pixelate();
 
-		var texture = this.Content.Load<Texture2D>("Textures/Blocks/grass");
+		var texture = this.Content.Load<Texture2D>("Textures/Blocks/test");
 
 		this.renderer = new Renderer(this.GraphicsDevice, texture);
 	}
@@ -96,8 +85,7 @@ public sealed class Game : Microsoft.Xna.Framework.Game, IGame
 		var physics = new OverworldPhysics();
 		var noise = new GradientNoise2(PLACEHOLDER_SEED);
 		var generator = new InfiniteWorldGenerator(player, noise);
-		var time = new OverworldTimeProvider();
 
-		this.world = new World(player, physics, generator, time);
+		this.world = new World(player, physics, generator);
 	}
 }

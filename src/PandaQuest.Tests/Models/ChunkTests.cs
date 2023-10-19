@@ -21,7 +21,7 @@ public sealed class ChunkTests
 		chunk.Load(this.noise);
 
 		// Act
-		bool containsBlock = chunk.Blocks.ContainsKey(new Vector3(blockX, 0, blockY));
+		bool containsBlock = false; // chunk.Blocks.ContainsKey(new Vector3(blockX, 0, blockY));
 
 		// Assert
 		Assert.True(containsBlock);

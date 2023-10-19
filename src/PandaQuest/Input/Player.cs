@@ -33,6 +33,8 @@ public sealed class Player
 
     public Vector3 MoveVector => this.moveVector;
 
+	public PlayerCamera Camera => this.camera;
+
     public void Update()
 	{
 		Vector3 moveVector = this.movement.GetInput(this.State);

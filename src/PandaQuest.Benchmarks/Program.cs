@@ -1,6 +1,4 @@
 ﻿using BenchmarkDotNet.Running;
-using PandaQuest.Benchmarks.Generators;
-using PandaQuest.Benchmarks.Physics;
+using PandaQuest.Benchmarks.Contexts;
 
-BenchmarkRunner.Run<InfiniteWorldGeneratorBenchmarks>();
-//BenchmarkRunner.Run<OverworldPhysicsBenchmarks>();
+BenchmarkRunner.Run<WorldBenchmarks>();

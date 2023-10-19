@@ -1,4 +1,6 @@
-﻿namespace PandaQuest.Models;
+﻿using Microsoft.Xna.Framework;
+
+namespace PandaQuest.Models;
 
 public readonly struct Block
 {

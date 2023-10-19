@@ -5,4 +5,6 @@ public interface IGame : IDisposable
 	void Run();
 
 	// TODO: RunAsync
+
+	void Exit();
 }

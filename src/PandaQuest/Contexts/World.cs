@@ -4,7 +4,6 @@ using PandaQuest.Generators;
 using PandaQuest.Input;
 using PandaQuest.Models;
 using PandaQuest.Physics;
-using PandaQuest.Time;
 
 namespace PandaQuest.Contexts;
 
@@ -14,14 +13,12 @@ public sealed class World
 
 	private readonly Player player;
 	private readonly IPhysics physics;
-	private readonly ITimeProvider timeProvider;
 
-	public World(Player player, IPhysics physics, IWorldGenerator worldGenerator, ITimeProvider timeProvider)
+	public World(Player player, IPhysics physics, IWorldGenerator worldGenerator)
 	{
 		this.player = player;
 		this.physics = physics;
 		this.Generation = worldGenerator;
-		this.timeProvider = timeProvider;
 	}
 
 	private Chunk CurrentChunk
