@@ -29,7 +29,7 @@ public sealed class Chunk
 		
 		for (var x = 0; x < Constants.CHUNK_SIZE; x++)
 		{
-			for (var y = 0; y < 0; y++)
+			for (var y = 0; y < Constants.WORLD_HEIGHT; y++)
 			{
 				for (var z = 0; z < Constants.CHUNK_SIZE; z++)
 				{

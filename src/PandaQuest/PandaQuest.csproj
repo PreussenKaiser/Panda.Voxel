@@ -25,7 +25,6 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<ProjectReference Include="..\PanDI\PanDI.csproj" />
 		<ProjectReference Include="..\Panda.Noise\Panda.Noise.csproj" />
 	</ItemGroup>
 	

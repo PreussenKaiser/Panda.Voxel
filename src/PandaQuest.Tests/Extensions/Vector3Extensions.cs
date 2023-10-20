@@ -20,4 +20,19 @@ public sealed class Vector3Extensions
 		// Assert
 		Assert.Equal(translatedPosition, chunkPosition);
 	}
+
+	[Theory]
+	[InlineData(32, 32, 0, 0)]
+	public void Absolute_To_Local_Position(
+		int absoluteX, int absoluteZ,
+		int localX, int localZ)
+	{
+		// Arrange
+		var absolutePosition = new Vector3(absoluteX, 0, absoluteZ);
+		var localPosition = new Vector3(localX, 0, localZ);
+
+		// Act
+
+		// Assert
+	}
 }

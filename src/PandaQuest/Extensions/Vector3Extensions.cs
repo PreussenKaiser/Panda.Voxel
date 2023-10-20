@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace PandaQuest.Extensions;
 
@@ -97,5 +98,10 @@ public static class Vector3Extensions
 		result.Round();
 
 		return result;
+	}
+
+	public static Vector3 ToLocalPosition(this Vector3 position)
+	{
+		throw new NotImplementedException();
 	}
 }
