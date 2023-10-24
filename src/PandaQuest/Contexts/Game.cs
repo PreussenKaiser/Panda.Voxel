@@ -7,7 +7,6 @@ using PandaQuest.Extensions;
 using PandaQuest.Generators;
 using PandaQuest.Input;
 using PandaQuest.Input.Movement;
-using PandaQuest.Physics;
 using PandaQuest.Rendering;
 
 namespace PandaQuest.Contexts;
@@ -66,7 +65,7 @@ public sealed class Game : Microsoft.Xna.Framework.Game
 	{
 		this.GraphicsDevice.Pixelate();
 
-		var texture = this.Content.Load<Texture2D>("Textures/Blocks/test");
+		var texture = this.Content.Load<Texture2D>("Textures/Blocks/grass");
 
 		this.renderer = new Renderer(this.GraphicsDevice, texture);
 	}
@@ -81,10 +80,9 @@ public sealed class Game : Microsoft.Xna.Framework.Game
 		const int PLACEHOLDER_SEED = 0;
 
 		var player = new Player(this.camera, new GroundedMovement());
-		var physics = new OverworldPhysics();
 		var noise = new GradientNoise2(PLACEHOLDER_SEED);
 		var generator = new InfiniteWorldGenerator(player, noise);
 
-		this.world = new World(player, physics, generator);
+		this.world = new World(player, generator);
 	}
 }

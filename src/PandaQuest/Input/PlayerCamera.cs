@@ -64,15 +64,8 @@ public sealed class PlayerCamera : Camera
 
 	public void Rotate(float yaw, float pitch)
 	{
-		if (!float.IsNaN(yaw))
-		{
-			this.Yaw += yaw;
-		}
-
-		if (!float.IsNaN(pitch))
-		{
-			this.Pitch += pitch;
-		}
+		this.Yaw += yaw;
+		this.Pitch -= pitch;
 	}
 
 	public bool IsVisible(BoundingBox boundingBox)
@@ -84,7 +77,7 @@ public sealed class PlayerCamera : Camera
 	{
 		this.rotation = Matrix.CreateFromYawPitchRoll(this.yaw, this.pitch, 0);
 
-		this.forward = Vector3.Transform(Vector3.Forward, this.rotation);
+		this.forward = Vector3.Transform(Vector3.UnitZ, this.rotation);
 		this.up = Vector3.Transform(Vector3.Up, this.rotation);
 
 		this.view = Matrix.CreateLookAt(this.position, this.position + this.forward, this.up);

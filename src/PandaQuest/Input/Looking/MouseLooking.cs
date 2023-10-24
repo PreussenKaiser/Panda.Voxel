@@ -6,33 +6,40 @@ namespace PandaQuest.Input.Looking;
 
 public sealed class MouseLooking
 {
-	private readonly MouseConfiguration configuration;
+	private readonly MouseConfiguration mouse;
+	private readonly DisplayConfiguration display;
+	private readonly Vector2 screenCenter;
 
 	private MouseState previousState;
 
-	public MouseLooking(MouseConfiguration configuration)
+	public MouseLooking(MouseConfiguration mouseConfiguration, DisplayConfiguration displayConfiguration)
 	{
-		this.configuration = configuration;
+		this.mouse = mouseConfiguration;
+		this.display = displayConfiguration;
+		this.screenCenter = new Vector2(displayConfiguration.Width / 2, displayConfiguration.Height / 2);
 
 		MouseState state = Mouse.GetState();
 		this.previousState = state;
-		this.previousState = state;
 	}
 
-	public Vector2 GetInput(Vector2 aspectRatio)
+	public Vector2 GetInput(GameTime gameTime)
 	{
 		MouseState currentState = Mouse.GetState();
 
-		var input = new Vector2(
-			(this.previousState.X - currentState.X) * this.configuration.Sensitity,
-			(this.previousState.Y - currentState.Y) * this.configuration.Sensitity);
+		if (currentState == this.previousState)
+		{
+			return Vector2.Zero;
+		}
 
+		float deltaX = this.screenCenter.X - currentState.X;
+		float deltaY = this.screenCenter.Y - currentState.Y;
+
+		var lookVector = new Vector2(deltaX * this.mouse.Sensitity, deltaY * this.mouse.Sensitity);
+
+		Mouse.SetPosition((int)this.screenCenter.X, (int)this.screenCenter.Y);
+		
 		this.previousState = currentState;
 
-		//Mouse.SetPosition(
-		//	(int)aspectRatio.X / 2,
-		//	(int)aspectRatio.Y / 2);
-
-		return input;
+		return lookVector;
 	}
 }

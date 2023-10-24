@@ -23,7 +23,7 @@ public sealed class Player
 	{
 		this.camera = camera;
 		this.movement = movement;
-		this.looking = new MouseLooking(new MouseConfiguration(.001f));
+		this.looking = new MouseLooking(new MouseConfiguration(.001f), this.camera.Display);
 	}
 
 	public Vector3 Position => new(
@@ -35,13 +35,12 @@ public sealed class Player
 
 	public PlayerCamera Camera => this.camera;
 
-	public void Update()
+	public void Update(GameTime gameTime)
 	{
 		Vector3 moveVector = this.movement.GetInput(this.State);
 		this.MoveTo(moveVector);
 
-		var aspectRatio = new Vector2(this.camera.Display.Width, this.camera.Display.Height);
-		Vector2 input = this.looking.GetInput(aspectRatio);
+		Vector2 input = this.looking.GetInput(gameTime);
 
 		this.camera.Rotate(input.X, input.Y);
 		this.camera.Update();
