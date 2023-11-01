@@ -1,5 +1,14 @@
-﻿using PandaQuest.Contexts;
+﻿using PandaQuest;
+using PandaQuest.Contexts;
+using PandaQuest.Extensions;
 
-using var game = new Game();
-
-game.Run();
+Game.CreateDefaultBuilder()
+	.ConfigureServices(services => services
+		.AddGame<VoxelGame>()
+		.AddMovement(true)
+		.AddPcInput()
+		.AddPlayer()
+		.AddWorldGeneration()
+		.AddConfiguration())
+	.Build()
+	.Run();

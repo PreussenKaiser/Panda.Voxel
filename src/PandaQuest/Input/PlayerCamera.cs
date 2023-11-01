@@ -18,7 +18,7 @@ public sealed class PlayerCamera : Camera
 	private Vector3 up;
 	private Vector3 forward;
 
-	public PlayerCamera(Vector3 position, DisplayConfiguration configuration)
+	public PlayerCamera(DisplayConfiguration configuration)
 	{
 		this.Display = configuration;
 
@@ -26,7 +26,7 @@ public sealed class PlayerCamera : Camera
 		this.Projection = Matrix.CreatePerspectiveFieldOfView(
 			MathHelper.ToRadians(Constants.FIELD_OF_VIEW), aspectRatio, .01f, 1000);
 
-		this.position = position;
+		this.position = new Vector3(0, 128, 0);
 		this.view = Matrix.Identity;
 		this.frustum = new BoundingFrustum(this.view * this.Projection);
 		this.up = Vector3.Up;

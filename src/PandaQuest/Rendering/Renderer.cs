@@ -25,19 +25,22 @@ public sealed class Renderer
 		this.effect.Projection = camera.Projection;
 		this.effect.View = camera.View;
 
-		foreach (var chunk in chunks)
-		{
-			VertexPositionTexture[] vertices = MeshGenerator
-				.Generate(chunk.Blocks)
-				.SelectMany(f => f.Vertices)
-				.ToArray();
+		var mesh = new List<VertexPositionTexture>();
 
-			using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
-			buffer.SetData(vertices, 0, vertices.Length);
-			
-			this.graphicsDevice.SetVertexBuffer(buffer);
-			
-			this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, vertices.Length);
+		foreach (Chunk chunk in chunks)
+		{
+			IEnumerable<VertexPositionTexture> vertices = MeshGenerator
+				.Generate(chunk.Blocks)
+				.SelectMany(f => f.Vertices);
+
+			mesh.AddRange(vertices);
 		}
+
+		using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, mesh.Count, BufferUsage.WriteOnly);
+		buffer.SetData(mesh.ToArray(), 0, mesh.Count);
+			
+		this.graphicsDevice.SetVertexBuffer(buffer);
+			
+		this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, mesh.Count / 2);
 	}
 }

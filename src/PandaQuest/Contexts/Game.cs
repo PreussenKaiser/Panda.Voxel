@@ -1,88 +1,28 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Panda.Noise.Gradient;
-using PandaQuest.Configuration;
-using PandaQuest.Extensions;
-using PandaQuest.Generators;
-using PandaQuest.Input;
-using PandaQuest.Input.Movement;
-using PandaQuest.Rendering;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace PandaQuest.Contexts;
 
-public sealed class Game : Microsoft.Xna.Framework.Game
+public sealed class Game
 {
-	private readonly GraphicsDeviceManager graphics;
+	private readonly IServiceProvider provider;
 
-	private PlayerCamera? camera;
-	private World? world;
-	private Renderer? renderer;
-
-	public Game() : base()
+	public Game(IServiceProvider provider)
 	{
-		this.graphics = new GraphicsDeviceManager(this);
-
-		this.Content.RootDirectory = "Content";
+		this.provider = provider;
 	}
 
-	protected override void Initialize()
+	public static GameBuilder CreateDefaultBuilder()
 	{
-		this.InitializeCamera();
-		this.InitializeRendering();
-		this.InitializeWorld();
+		var services = new ServiceCollection();
+
+		return new GameBuilder(services);
 	}
 
-	protected override void Update(GameTime gameTime)
+	public void Run()
 	{
-		if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-		{
-			this.Exit();
-		}
+		using IServiceScope scope = this.provider.CreateScope();
+		using var game = scope.ServiceProvider.GetService<IGame>();
 
-		this.world?.Update(gameTime);
-	}
-
-	protected override void Draw(GameTime gameTime)
-	{
-		if (this.camera is not null && this.world is not null)
-		{
-			this.renderer?.Draw(this.camera, this.world.Generation.Chunks);
-		}
-	}
-
-	private void InitializeCamera()
-	{
-		var position = new Vector3(0, 128, 0);
-		var displayConfiguration = new DisplayConfiguration(
-			this.GraphicsDevice.Viewport.Width,
-			this.GraphicsDevice.Viewport.Height);
-
-		this.camera = new PlayerCamera(position, displayConfiguration);
-	}
-
-	private void InitializeRendering()
-	{
-		this.GraphicsDevice.Pixelate();
-
-		var texture = this.Content.Load<Texture2D>("Textures/Blocks/grass");
-
-		this.renderer = new Renderer(this.GraphicsDevice, texture);
-	}
-
-	private void InitializeWorld()
-	{
-		if (this.camera is null)
-		{
-			return;
-		}
-
-		const int PLACEHOLDER_SEED = 0;
-
-		var player = new Player(this.camera, new GroundedMovement());
-		var noise = new GradientNoise2(PLACEHOLDER_SEED);
-		var generator = new InfiniteWorldGenerator(player, noise);
-
-		this.world = new World(player, generator);
+		game?.Run();
 	}
 }

@@ -19,7 +19,7 @@ public readonly struct BlockCollection
 		get
 		{
 			return y >= this.configuration.WorldHeight
-				? new Block(BlockIndex.Air)
+				? new Block(BlockIndex.Air, Vector3.Zero)
 				: this.blocks[x, y, z];
 		}
 		set => this.blocks[x, y, z] = value;

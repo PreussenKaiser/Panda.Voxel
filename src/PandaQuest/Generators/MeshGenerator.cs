@@ -28,7 +28,9 @@ public static class MeshGenerator
 
 					if (topBlockEmpty)
 					{
-						yield return new BlockFace(position.ToTopFace());
+						Block block = blocks[x, y, z];
+
+						yield return new BlockFace(block.Position.ToTopFace());
 					}
 
 					/*
