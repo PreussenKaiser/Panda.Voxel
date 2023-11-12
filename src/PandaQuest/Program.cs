@@ -5,10 +5,11 @@ using PandaQuest.Extensions;
 Game.CreateDefaultBuilder()
 	.ConfigureServices(services => services
 		.AddGame<VoxelGame>()
+		.AddRendering()
 		.AddMovement(true)
 		.AddPcInput()
 		.AddPlayer()
-		.AddWorldGeneration()
+		.AddFiniteWorldGeneration()
 		.AddConfiguration())
 	.Build()
 	.Run();

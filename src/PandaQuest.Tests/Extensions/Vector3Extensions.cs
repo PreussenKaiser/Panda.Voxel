@@ -1,38 +1,49 @@
 ﻿using Microsoft.Xna.Framework;
+using PandaQuest.Configuration;
 using PandaQuest.Extensions;
 
 namespace PandaQuest.Tests.Extensions;
 
 public sealed class Vector3Extensions
 {
+	private readonly WorldConfiguration worldConfiguration = new WorldConfiguration
+	{
+		ChunkSize = 16,
+		WorldHeight = 128,
+		FlatLimit = 48,
+	};
+
 	[Theory]
-	[InlineData(0f, 0f, 0, 0f)]
+	[InlineData(0, 0, 0, 0)]
 	[InlineData(.4f, -17, 0, -1)]
-	public void Translate_Position(float playerX, float playerZ, float chunkX, float chunkY)
+	public void ToLocalPosition_HappyPath(float globalX, float globalY, float localX, float localY)
 	{
 		// Arrange
-		var playerPosition = new Vector3(playerX, 0, playerZ);
-		var chunkPosition = new Vector2(chunkX, chunkY);
+		var globalPosition = new Vector3(globalX, 0, globalY);
+		var expectedLocalPosition = new Vector2(localX, localY);
 
 		// Act
-		var translatedPosition = playerPosition.ToChunkPosition();
+		Vector2 actualLocalPosition = globalPosition.ToLocalPosition(this.worldConfiguration);
 
 		// Assert
-		Assert.Equal(translatedPosition, chunkPosition);
+		Assert.Equal(expectedLocalPosition, actualLocalPosition);
 	}
 
 	[Theory]
-	[InlineData(32, 32, 0, 0)]
-	public void Absolute_To_Local_Position(
-		int absoluteX, int absoluteZ,
-		int localX, int localZ)
+	[InlineData(0, 0, 0, 0, 0, 0)]
+	[InlineData(0, 0, 1, 1, 16, 16)]
+	[InlineData(12, 2, 3, 4, 60, 66)]
+	public void ToGlobalPosition_HappyPath(float localX, float localY, float chunkX, float chunkY, float globalX, float globalY)
 	{
 		// Arrange
-		var absolutePosition = new Vector3(absoluteX, 0, absoluteZ);
-		var localPosition = new Vector3(localX, 0, localZ);
+		var localPosition = new Vector3(localX, 1, localY);
+		var chunkPosition = new Vector2(chunkX, chunkY);
+		var expectedGlobalPosition = new Vector2(globalX, globalY);
 
 		// Act
+		Vector2 actualGlobalPosition = localPosition.ToGlobalPosition(chunkPosition, this.worldConfiguration);
 
 		// Assert
+		Assert.Equal(expectedGlobalPosition, actualGlobalPosition);
 	}
 }

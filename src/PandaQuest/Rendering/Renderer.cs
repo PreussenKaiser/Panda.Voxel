@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PandaQuest.Generators;
 using PandaQuest.Input;
 using PandaQuest.Models;
 
@@ -17,7 +16,7 @@ public sealed class Renderer
 		this.effect = new BasicEffect(graphicsDevice){ TextureEnabled = true, Texture =  texture };
 	}
 
-	public void Draw(PlayerCamera camera, IEnumerable<Chunk> chunks)
+	public void Draw(PlayerCamera camera, VertexPositionTexture[] mesh)
 	{
 		this.graphicsDevice.Clear(Color.CornflowerBlue);
 		this.effect.CurrentTechnique.Passes[0].Apply();
@@ -25,22 +24,11 @@ public sealed class Renderer
 		this.effect.Projection = camera.Projection;
 		this.effect.View = camera.View;
 
-		var mesh = new List<VertexPositionTexture>();
-
-		foreach (Chunk chunk in chunks)
-		{
-			IEnumerable<VertexPositionTexture> vertices = MeshGenerator
-				.Generate(chunk.Blocks)
-				.SelectMany(f => f.Vertices);
-
-			mesh.AddRange(vertices);
-		}
-
-		using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, mesh.Count, BufferUsage.WriteOnly);
-		buffer.SetData(mesh.ToArray(), 0, mesh.Count);
+		using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, mesh.Length, BufferUsage.WriteOnly);
+		buffer.SetData(mesh, 0, mesh.Length);
 			
 		this.graphicsDevice.SetVertexBuffer(buffer);
-			
-		this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, mesh.Count / 2);
+		
+		this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, mesh.Length / 2);
 	}
 }

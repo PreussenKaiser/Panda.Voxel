@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using PandaQuest.Configuration;
 
 namespace PandaQuest.Extensions;
 
@@ -89,19 +90,25 @@ public static class Vector3Extensions
 		return vector.Y < 0;
 	}
 
-	public static Vector2 ToChunkPosition(this Vector3 position)
+	public static Vector2 ToLocalPosition(this Vector3 position, WorldConfiguration configuration)
 	{
 		var result = new Vector2(
-			position.X / Constants.CHUNK_SIZE,
-			position.Z / Constants.CHUNK_SIZE);
+			position.X / configuration.ChunkSize,
+			position.Z / configuration.ChunkSize);
 
 		result.Round();
 
 		return result;
 	}
 
-	public static Vector3 ToLocalPosition(this Vector3 position)
+	public static Vector2 ToGlobalPosition(this Vector3 localPosition, Vector2 chunkPosition, WorldConfiguration configuration)
 	{
-		throw new NotImplementedException();
+		var result = new Vector2(
+			chunkPosition.X * configuration.ChunkSize + localPosition.X,
+			chunkPosition.Y * configuration.ChunkSize + localPosition.Z);
+
+		result.Round();
+
+		return result;
 	}
 }
