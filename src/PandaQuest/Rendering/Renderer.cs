@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PandaQuest.Input;
-using PandaQuest.Models;
+using PandaQuest.Input.Camera;
 
 namespace PandaQuest.Rendering;
 
@@ -16,7 +15,7 @@ public sealed class Renderer
 		this.effect = new BasicEffect(graphicsDevice){ TextureEnabled = true, Texture =  texture };
 	}
 
-	public void Draw(PlayerCamera camera, VertexPositionTexture[] mesh)
+	public void Draw(ICamera camera, VertexPositionTexture[] vertices)
 	{
 		this.graphicsDevice.Clear(Color.CornflowerBlue);
 		this.effect.CurrentTechnique.Passes[0].Apply();
@@ -24,11 +23,11 @@ public sealed class Renderer
 		this.effect.Projection = camera.Projection;
 		this.effect.View = camera.View;
 
-		using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, mesh.Length, BufferUsage.WriteOnly);
-		buffer.SetData(mesh, 0, mesh.Length);
+		using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+		buffer.SetData(vertices, 0, vertices.Length);
 			
 		this.graphicsDevice.SetVertexBuffer(buffer);
 		
-		this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, mesh.Length / 2);
+		this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, vertices.Length);
 	}
 }

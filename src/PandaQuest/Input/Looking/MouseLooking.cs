@@ -34,7 +34,7 @@ public sealed class MouseLooking
 		float deltaX = this.screenCenter.X - currentState.X;
 		float deltaY = this.screenCenter.Y - currentState.Y;
 
-		var lookVector = new Vector2(deltaX * this.mouse.Sensitity, deltaY * this.mouse.Sensitity);
+		var lookVector = new Vector2(deltaX * this.mouse.Sensitivity, deltaY * this.mouse.Sensitivity);
 
 		Mouse.SetPosition((int)this.screenCenter.X, (int)this.screenCenter.Y);
 		

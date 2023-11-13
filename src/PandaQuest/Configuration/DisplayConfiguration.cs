@@ -1,3 +1,10 @@
 ﻿namespace PandaQuest.Configuration;
 
-public sealed record DisplayConfiguration(int Width, int Height);
+public sealed class DisplayConfiguration
+{
+	public required int Width { get; init; }
+
+	public required int Height { get; init; }
+
+	public required int FieldOfView { get; init; }
+}

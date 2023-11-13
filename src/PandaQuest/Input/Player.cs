@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using PandaQuest.Configuration;
 using PandaQuest.Extensions;
+using PandaQuest.Input.Camera;
 using PandaQuest.Input.Looking;
 using PandaQuest.Input.Movement;
 using PandaQuest.States;
@@ -13,17 +13,17 @@ public sealed class Player
 
 	private const int PLAYER_HEIGHT = 2;
 
+	private readonly ICamera camera;
 	private readonly IMovement movement;
 	private readonly MouseLooking looking;
-	private readonly PlayerCamera camera;
 
 	private Vector3 moveVector;
 
-	public Player(PlayerCamera camera, IMovement movement)
+	public Player(ICamera camera, IMovement movement, MouseLooking looking)
 	{
 		this.camera = camera;
 		this.movement = movement;
-		this.looking = new MouseLooking(new MouseConfiguration(.001f), this.camera.Display);
+		this.looking = looking;
 	}
 
 	public Vector3 Position => new(
@@ -33,7 +33,7 @@ public sealed class Player
 
 	public Vector3 MoveVector => this.moveVector;
 
-	public PlayerCamera Camera => this.camera;
+	public ICamera Camera => this.camera;
 
 	public void Update(GameTime gameTime)
 	{

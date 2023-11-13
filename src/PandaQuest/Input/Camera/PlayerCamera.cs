@@ -1,13 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using PandaQuest.Configuration;
 
-namespace PandaQuest.Input;
+namespace PandaQuest.Input.Camera;
 
-public sealed class PlayerCamera : Camera
+public sealed class PlayerCamera : ICamera
 {
-	public readonly Matrix Projection;
-	public readonly DisplayConfiguration Display;
-
 	private readonly BoundingFrustum frustum;
 
 	private Vector3 position;
@@ -20,9 +17,7 @@ public sealed class PlayerCamera : Camera
 
 	public PlayerCamera(DisplayConfiguration configuration)
 	{
-		this.Display = configuration;
-
-		var aspectRatio = (float)configuration.Width / (float)configuration.Height;
+		var aspectRatio = configuration.Width / (float)configuration.Height;
 		this.Projection = Matrix.CreatePerspectiveFieldOfView(
 			MathHelper.ToRadians(Constants.FIELD_OF_VIEW), aspectRatio, .01f, 1000);
 
@@ -33,9 +28,11 @@ public sealed class PlayerCamera : Camera
 		this.forward = Vector3.UnitZ;
 	}
 
-	public Vector3 Position => this.position;
+	public Matrix Projection { get; }
 
 	public Matrix View => this.view;
+
+	public Vector3 Position => this.position;
 
 	public float Yaw
 	{
@@ -49,7 +46,7 @@ public sealed class PlayerCamera : Camera
 				this.yaw -= MathHelper.TwoPi;
 			}
 
-			while (this.yaw < 0)
+			while (yaw < 0)
 			{
 				this.yaw += MathHelper.TwoPi;
 			}
