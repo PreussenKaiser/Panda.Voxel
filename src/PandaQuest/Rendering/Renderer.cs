@@ -23,11 +23,27 @@ public sealed class Renderer
 		this.effect.Projection = camera.Projection;
 		this.effect.View = camera.View;
 
-		using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
-		buffer.SetData(vertices, 0, vertices.Length);
-			
+		vertices = new VertexPositionTexture[6]
+		{
+			new VertexPositionTexture(new Vector3(0, 0, 0), new Vector2(0, 0)),
+			new VertexPositionTexture(new Vector3(1, 0, 0), new Vector2(1, 0)),
+			new VertexPositionTexture(new Vector3(0, 1, 0), new Vector2(0, 1)),
+
+			new VertexPositionTexture(new Vector3(1, 0, 0), new Vector2(1, 0)),
+			new VertexPositionTexture(new Vector3(1, 1, 0), new Vector2(1, 1)),
+			new VertexPositionTexture(new Vector3(0, 1, 0), new Vector2(0, 1)),
+		};
+
+		using var buffer = new VertexBuffer(this.graphicsDevice, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
+		buffer.SetData(vertices, 0, 4);
+
 		this.graphicsDevice.SetVertexBuffer(buffer);
-		
-		this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, vertices.Length);
+		this.graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, 2);
+
+		//using var buffer = new VertexBuffer(this.graphicsDevice, VertexPositionTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+		//buffer.SetData(vertices, 0, vertices.Length);
+			
+		//this.graphicsDevice.SetVertexBuffer(buffer);
+		//this.graphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, vertices.Length);
 	}
 }

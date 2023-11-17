@@ -21,7 +21,7 @@ public sealed class PlayerCamera : ICamera
 		this.Projection = Matrix.CreatePerspectiveFieldOfView(
 			MathHelper.ToRadians(Constants.FIELD_OF_VIEW), aspectRatio, .01f, 1000);
 
-		this.position = new Vector3(0, 128, 0);
+		this.position = new Vector3(0, 0, 0);
 		this.view = Matrix.Identity;
 		this.frustum = new BoundingFrustum(this.view * this.Projection);
 		this.up = Vector3.Up;

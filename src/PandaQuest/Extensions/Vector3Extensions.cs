@@ -63,10 +63,10 @@ public static class Vector3Extensions
 	{
 		var faces = new VertexPositionTexture[4]
 		{
-			new(new Vector3(position.X, position.Y, position.Z), new Vector2(0, 1)),
-			new(new Vector3(position.X, position.Y, position.Z - 1), new Vector2(0, 0)),
-			new(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 1)),
-			new(new Vector3(position.X + 1, position.Y, position.Z - 1), new Vector2(1, 0)),
+			new(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(0, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(0, 0)),
+			new(new Vector3(position.X, position.Y, position.Z), new Vector2(1, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 0)),
 		};
 
 		return faces;
