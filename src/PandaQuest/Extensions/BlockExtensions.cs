@@ -12,11 +12,40 @@ public static class BlockExtensions
 		{
 			Vector3 position = keyValue.Key;
 
-			bool topBlockIsEmpty = blocks.ContainsKey(new Vector3(position.X, position.Y + 1, position.Z));
+			bool frontBlockIsEmpty = !blocks.ContainsKey(new Vector3(position.X, position.Y, position.Z - 1));
+			bool backBlockIsEmplty = !blocks.ContainsKey(new Vector3(position.X, position.Y, position.Z + 1));
 
-			if (!topBlockIsEmpty)
+			bool rightFaceIsEmpty = !blocks.ContainsKey(new Vector3(position.X - 1, position.Y, position.Z));
+			bool leftFaceIsEmpty = !blocks.ContainsKey(new Vector3(position.X + 1, position.Y, position.Z));
+
+			bool topBlockIsEmpty = !blocks.ContainsKey(new Vector3(position.X, position.Y + 1, position.Z));
+			bool bottomBlockIsEmpty = !blocks.ContainsKey(new Vector3(position.X, position.Y - 1, position.Z));
+
+			if (frontBlockIsEmpty)
+			{
+				yield return new BlockFace(position.ToFrontFace());
+			}
+			if (backBlockIsEmplty)
+			{
+				yield return new BlockFace(position.ToBackFace());
+			}
+
+			if (rightFaceIsEmpty)
+			{
+				yield return new BlockFace(position.ToRightFace());
+			}
+			if (leftFaceIsEmpty)
+			{
+				yield return new BlockFace(position.ToLeftFace());
+			}
+
+			if (topBlockIsEmpty)
 			{
 				yield return new BlockFace(position.ToTopFace());
+			}
+			if (bottomBlockIsEmpty)
+			{
+				yield return new BlockFace(position.ToBottomFace());
 			}
 		}
 	}

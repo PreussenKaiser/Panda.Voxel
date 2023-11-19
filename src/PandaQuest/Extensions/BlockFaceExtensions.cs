@@ -5,11 +5,11 @@ namespace PandaQuest.Extensions;
 
 public static class BlockFaceExtensions
 {
-	private const int FACE_VERTICES = 4;
+	private const int FACE_VERTICES = 6;
 
 	public static VertexPositionTexture[] ToVertices(this IEnumerable<BlockFace> mesh)
 	{
-		var vertices = new VertexPositionTexture[mesh.Count() * 4];
+		var vertices = new VertexPositionTexture[mesh.Count() * FACE_VERTICES];
 		int index = default;
 
 		foreach (BlockFace face in mesh)
