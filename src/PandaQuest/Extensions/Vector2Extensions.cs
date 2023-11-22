@@ -10,4 +10,11 @@ public static class Vector2Extensions
 
 		return result;
 	}
+
+	public static System.Numerics.Vector2 ToVector2(this Vector2 vector)
+	{
+		var result = new System.Numerics.Vector2(vector.X, vector.Y);
+
+		return result;
+	}
 }

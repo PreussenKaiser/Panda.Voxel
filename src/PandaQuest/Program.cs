@@ -2,6 +2,7 @@
 using PandaQuest.Lifecycle;
 using PandaQuest.Extensions;
 using PandaQuest.Generators;
+using Panda.Noise.Gradient;
 
 Game.CreateDefaultBuilder()
 	.ConfigureServices(services => services
@@ -9,7 +10,7 @@ Game.CreateDefaultBuilder()
 		.AddMovement(true)
 		.AddPcInput()
 		.AddPlayer()
-		.AddWorldGeneration<FiniteWorldGenerator>()
+		.AddWorldGeneration<FiniteWorldGenerator, GradientNoise2>()
 		.AddConfiguration())
 	.Build()
 	.Run();

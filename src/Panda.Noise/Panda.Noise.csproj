@@ -6,4 +6,8 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Panda.Extensions\Panda.Extensions.csproj" />
+	</ItemGroup>
+
 </Project>

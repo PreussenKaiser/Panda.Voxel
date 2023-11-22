@@ -23,6 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Panda.Extensions\Panda.Extensions.csproj" />
+    <ProjectReference Include="..\Panda.Noise\Panda.Noise.csproj" />
     <ProjectReference Include="..\PandaQuest\PandaQuest.csproj" />
   </ItemGroup>
 

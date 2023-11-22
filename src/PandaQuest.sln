@@ -16,6 +16,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PandaQuest.Tests", "PandaQu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Noise", "Panda.Noise\Panda.Noise.csproj", "{5017B136-9F2F-43DF-8A8B-8380D8DD8CB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Extensions", "Panda.Extensions\Panda.Extensions.csproj", "{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panda.Noise.Visualizer", "Panda.Noise.Visualizer\Panda.Noise.Visualizer.csproj", "{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,14 @@ Global
 		{5017B136-9F2F-43DF-8A8B-8380D8DD8CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5017B136-9F2F-43DF-8A8B-8380D8DD8CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5017B136-9F2F-43DF-8A8B-8380D8DD8CB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

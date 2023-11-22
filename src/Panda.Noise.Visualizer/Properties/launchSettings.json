@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Visualizer": {
+      "commandName": "Project",
+      "commandLineArgs": "visualize -path C:\\Visualizer"
+    }
+  }
+}

@@ -2,7 +2,7 @@
 using PandaQuest.Configuration;
 using PandaQuest.Extensions;
 
-namespace PandaQuest.Tests.Extensions;
+namespace PandaQuest.Tests.Game.Extensions;
 
 public sealed class Vector3Extensions
 {
@@ -23,7 +23,7 @@ public sealed class Vector3Extensions
 		var expectedLocalPosition = new Vector2(localX, localY);
 
 		// Act
-		Vector2 actualLocalPosition = globalPosition.ToLocalPosition(this.worldConfiguration);
+		Vector2 actualLocalPosition = globalPosition.ToLocalPosition(worldConfiguration);
 
 		// Assert
 		Assert.Equal(expectedLocalPosition, actualLocalPosition);
@@ -41,7 +41,7 @@ public sealed class Vector3Extensions
 		var expectedGlobalPosition = new Vector2(globalX, globalY);
 
 		// Act
-		Vector2 actualGlobalPosition = localPosition.ToGlobalPosition(chunkPosition, this.worldConfiguration);
+		Vector2 actualGlobalPosition = localPosition.ToGlobalPosition(chunkPosition, worldConfiguration);
 
 		// Assert
 		Assert.Equal(expectedGlobalPosition, actualGlobalPosition);

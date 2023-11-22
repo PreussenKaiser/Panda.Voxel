@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xna.Framework;
+using Panda.Noise.Abstractions;
+using Panda.Noise.Configuration;
+using Panda.Noise.Gradient;
 using PandaQuest.Configuration;
 using PandaQuest.Generators;
 using PandaQuest.Input;
@@ -37,10 +40,13 @@ public static class ServiceCollectionExtensions
 			.AddSingleton<ICamera, PlayerCamera>();
 	}
 
-	public static IServiceCollection AddWorldGeneration<TWorldGenerator>(this IServiceCollection services)
+	public static IServiceCollection AddWorldGeneration<TWorldGenerator, TNoise>(this IServiceCollection services)
 		where TWorldGenerator : class, IWorldGenerator
+		where TNoise : class, INoise
 	{
-		return services.AddSingleton<IWorldGenerator, TWorldGenerator>();
+		return services
+			.AddSingleton<IWorldGenerator, TWorldGenerator>()
+			.AddSingleton<INoise, GradientNoise2>();
 	}
 
 	public static IServiceCollection AddConfiguration(this IServiceCollection services)
@@ -49,11 +55,13 @@ public static class ServiceCollectionExtensions
 		var finiteWorldConfiguration = new FiniteWorldConfiguration { Dimensions = new Vector2(8) };
 		var mouseConfiguration = new MouseConfiguration { Sensitivity = .001f };
 		var worldConfiguration = new WorldConfiguration { ChunkSize = 16, FlatLimit = 48, WorldHeight = 128, };
+		var gradientNoiseConfiguration = new GradientNoiseConfiguration(48, finiteWorldConfiguration.Dimensions.ToNumerics() * 16);
 
 		return services
 			.AddSingleton(displayConfiguration)
 			.AddSingleton(finiteWorldConfiguration)
 			.AddSingleton(mouseConfiguration)
-			.AddSingleton(worldConfiguration);
+			.AddSingleton(worldConfiguration)
+			.AddSingleton(gradientNoiseConfiguration);
 	}
 }

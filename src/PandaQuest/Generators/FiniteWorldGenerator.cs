@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Panda.Noise.Abstractions;
 using PandaQuest.Configuration;
 using PandaQuest.Extensions;
 using PandaQuest.Models;
@@ -7,6 +8,7 @@ namespace PandaQuest.Generators;
 
 public sealed class FiniteWorldGenerator : IWorldGenerator
 {
+	private readonly INoise noise;
 	private readonly FiniteWorldConfiguration finiteWorldConfiguration;
 	private readonly WorldConfiguration worldConfiguration;
 	private readonly Chunk[,] chunks;
@@ -14,8 +16,9 @@ public sealed class FiniteWorldGenerator : IWorldGenerator
 	private bool wasGenerated;
 	private IEnumerable<BlockFace>? meshCache;
 
-	public FiniteWorldGenerator(FiniteWorldConfiguration finiteWorldConfiguration, WorldConfiguration worldConfiguration)
+	public FiniteWorldGenerator(INoise noise, FiniteWorldConfiguration finiteWorldConfiguration, WorldConfiguration worldConfiguration)
 	{
+		this.noise = noise;
 		this.finiteWorldConfiguration = finiteWorldConfiguration;
 		this.worldConfiguration = worldConfiguration;
 
@@ -41,7 +44,7 @@ public sealed class FiniteWorldGenerator : IWorldGenerator
 		{
 			for (var y = 0; y < this.finiteWorldConfiguration.Dimensions.Y; y++)
 			{
-				var chunk = new Chunk(new Vector2(x, y), this.worldConfiguration);
+				var chunk = new Chunk(new Vector2(x, y), this.noise, this.worldConfiguration);
 				chunk.Load();
 
 				this.chunks[x, y] = chunk;

@@ -10,13 +10,13 @@ public static class Vector3Extensions
 	{
 		var faces = new VertexPositionTexture[6]
 		{
-			new VertexPositionTexture(position, new Vector2(0, 0)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 0)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 1)),
+			new(position, new Vector2(0, 0)),
+			new(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 0)),
+			new(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 1)),
 
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 0)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(1, 1)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 0)),
+			new(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(1, 1)),
+			new(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 1)),
 		};
 
 		return faces;
@@ -26,13 +26,13 @@ public static class Vector3Extensions
 	{
 		var faces = new VertexPositionTexture[6]
 		{
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 1)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 0)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(0, 0)),
+			new(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 0)),
+			new(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(0, 0)),
 
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 1)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y + 1, position.Z + 1), new Vector2(1, 1)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 0)),
+			new(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 1)),
+			new(new Vector3(position.X + 1, position.Y + 1, position.Z + 1), new Vector2(1, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 0)),
 		};
 
 		return faces;
@@ -42,13 +42,13 @@ public static class Vector3Extensions
 	{
 		var faces = new VertexPositionTexture[6]
 		{
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(0, 0)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 0)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(0, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(0, 0)),
+			new(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 0)),
+			new(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(0, 1)),
 
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 0)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y + 1, position.Z + 1), new Vector2(1, 1)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(0, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 0)),
+			new(new Vector3(position.X + 1, position.Y + 1, position.Z + 1), new Vector2(1, 1)),
+			new(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(0, 1)),
 		};
 
 		return faces;
@@ -58,13 +58,13 @@ public static class Vector3Extensions
 	{
 		var faces = new VertexPositionTexture[6]
 		{
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 0)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(1, 0)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 1)),
+			new(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 0)),
+			new(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(1, 0)),
+			new(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 1)),
 
-			new VertexPositionTexture(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(1, 0)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y, position.Z), new Vector2(1, 1)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 1)),
+			new(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(1, 0)),
+			new(new Vector3(position.X, position.Y, position.Z), new Vector2(1, 1)),
+			new(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 1)),
 		};
 
 		return faces;
@@ -74,13 +74,13 @@ public static class Vector3Extensions
 	{
 		var faces = new VertexPositionTexture[6]
 		{
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y + 1, position.Z + 1), new Vector2(1, 1)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 1)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(1, 0)),
+			new(new Vector3(position.X + 1, position.Y + 1, position.Z + 1), new Vector2(1, 1)),
+			new(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 1)),
+			new(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(1, 0)),
 
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 1)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 0)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(1, 0)),
+			new(new Vector3(position.X, position.Y + 1, position.Z + 1), new Vector2(0, 1)),
+			new(new Vector3(position.X, position.Y + 1, position.Z), new Vector2(0, 0)),
+			new(new Vector3(position.X + 1, position.Y + 1, position.Z), new Vector2(1, 0)),
 		};
 
 		return faces;
@@ -90,13 +90,13 @@ public static class Vector3Extensions
 	{
 		var faces = new VertexPositionTexture[6]
 		{
-			new VertexPositionTexture(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(0, 1)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 1)),
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 0)),
+			new(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(0, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z + 1), new Vector2(1, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 0)),
 
-			new VertexPositionTexture(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 0)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y, position.Z), new Vector2(0, 0)),
-			new VertexPositionTexture(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(0, 1)),
+			new(new Vector3(position.X + 1, position.Y, position.Z), new Vector2(1, 0)),
+			new(new Vector3(position.X, position.Y, position.Z), new Vector2(0, 0)),
+			new(new Vector3(position.X, position.Y, position.Z + 1), new Vector2(0, 1)),
 		};
 
 		return faces;
