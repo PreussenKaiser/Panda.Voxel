@@ -7,13 +7,11 @@ namespace Panda.Noise.Visualizer.Commands;
 
 public sealed class VisualizeCommand : CommandBase
 {
-	private readonly INoise noise;
 	private readonly IVisualizerService visualizerService;
 	private readonly ILogger<VisualizeCommand> logger;
 
-	public VisualizeCommand(INoise noise, IVisualizerService visualizerService, ILogger<VisualizeCommand> logger)
+	public VisualizeCommand(IVisualizerService visualizerService, ILogger<VisualizeCommand> logger)
 	{
-		this.noise = noise;
 		this.visualizerService = visualizerService;
 		this.logger = logger;
 
@@ -24,8 +22,7 @@ public sealed class VisualizeCommand : CommandBase
 	{
 		this.logger.LogInformation("Visualizing map");
 
-		int[,] map = this.noise.Generate();
-
-		return this.visualizerService.CreateAsync(map);
+		CancellationToken cancellationToken = new();
+		return this.visualizerService.CreateAsync(cancellationToken);
 	}
 }

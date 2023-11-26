@@ -55,7 +55,7 @@ public static class ServiceCollectionExtensions
 		var finiteWorldConfiguration = new FiniteWorldConfiguration { Dimensions = new Vector2(8) };
 		var mouseConfiguration = new MouseConfiguration { Sensitivity = .001f };
 		var worldConfiguration = new WorldConfiguration { ChunkSize = 16, FlatLimit = 48, WorldHeight = 128, };
-		var gradientNoiseConfiguration = new GradientNoiseConfiguration(48, finiteWorldConfiguration.Dimensions.ToNumerics() * 16);
+		var gradientNoiseConfiguration = new GradientNoiseConfiguration(4);
 
 		return services
 			.AddSingleton(displayConfiguration)

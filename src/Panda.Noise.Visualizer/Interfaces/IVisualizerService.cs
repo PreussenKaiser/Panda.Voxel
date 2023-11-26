@@ -2,7 +2,7 @@
 
 public interface IVisualizerService
 {
-	void Create(int[,] map);
+	void Create();
 
-	Task CreateAsync(int[,] map, CancellationToken cancellationToken = default);
+	Task CreateAsync(CancellationToken cancellationToken = default);
 }
