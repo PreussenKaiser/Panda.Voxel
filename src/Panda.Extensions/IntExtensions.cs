@@ -28,4 +28,11 @@ public static class IntExtensions
 
 		return result;
 	}
+
+	public static float Normalize(this int value, int min, int max)
+	{
+		float result = ((value - min) / (max - min)) * 2 - 1;
+
+		return result;
+	}
 }

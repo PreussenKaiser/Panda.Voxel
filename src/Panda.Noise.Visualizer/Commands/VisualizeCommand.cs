@@ -1,6 +1,5 @@
 ﻿using Consul.Commands;
 using Microsoft.Extensions.Logging;
-using Panda.Noise.Abstractions;
 using Panda.Noise.Visualizer.Interfaces;
 
 namespace Panda.Noise.Visualizer.Commands;
@@ -22,7 +21,8 @@ public sealed class VisualizeCommand : CommandBase
 	{
 		this.logger.LogInformation("Visualizing map");
 
-		CancellationToken cancellationToken = new();
-		return this.visualizerService.CreateAsync(cancellationToken);
+		var cancellationTokenSource = new CancellationTokenSource();
+
+		return this.visualizerService.CreateAsync(cancellationTokenSource.Token);
 	}
 }

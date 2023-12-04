@@ -1,10 +1,8 @@
 ﻿namespace Panda.Noise.Visualizer.Configuration;
 
-public sealed class PhotoVisualizerConfiguration
+public sealed class PhotoVisualizerConfiguration(string filePath, int width, int height)
 {
-	public required string FilePath { get; init; }
-
-	public required int Width { get; init; }
-
-	public required int Height { get; init; }
+	public readonly string FilePath = filePath;
+	public readonly int Width = width;
+	public readonly int Height = height;
 }

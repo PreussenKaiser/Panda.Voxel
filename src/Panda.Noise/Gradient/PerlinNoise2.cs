@@ -8,9 +8,9 @@ namespace Panda.Noise.Gradient;
 /// <summary>
 /// 2d gradient noise.
 /// </summary>
-public sealed class GradientNoise2(GradientNoiseConfiguration configuration) : INoise2
+public sealed class PerlinNoise2(PerlinNoiseConfiguration configuration) : INoise2
 {
-	private readonly GradientNoiseConfiguration configuration = configuration;
+	private readonly PerlinNoiseConfiguration configuration = configuration;
 	private readonly Random random = new(configuration.Seed);
 
 	private int[]? permutationTable;

@@ -5,38 +5,25 @@ using Panda.Noise.Gradient;
 using Panda.Noise.Visualizer.Configuration;
 using Panda.Noise.Visualizer.Implementations;
 using Panda.Noise.Visualizer.Interfaces;
+using Panda.Noise.White;
 
 namespace Panda.Noise.Visualizer.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-	public static IServiceCollection AddVisualizer(this IServiceCollection services)
-	{
-		services
-			.AddSingleton<IColorPicker, GrayScaleColorPicker>()
-			.AddSingleton<INoise2, GradientNoise2>()
-			.AddSingleton<IVisualizerService, PhotoVisualizerService>();
+	public static IServiceCollection AddVisualizer<TColorPicker>(this IServiceCollection services, string[] args) where TColorPicker : class, IColorPicker
+		=> services
+			.AddSingleton<IVisualizerService, PhotoVisualizerService>()
+			.AddSingleton<IColorPicker, TColorPicker>()
+			.AddSingleton(new PhotoVisualizerConfiguration(args[2], 128, 128));
 
-		return services;
-	}
+	public static IServiceCollection AddRandomNoise(this IServiceCollection services)
+		=> services
+			.AddSingleton<INoise2, RandomNoise2>()
+			.AddSingleton(new WhiteNoiseConfiguration());
 
-	public static IServiceCollection AddConfiguration(this IServiceCollection services, string[] args)
-	{
-		// TODO: Getting configuration like this is cringe.
-		var gradientNoiseConfiguration = new GradientNoiseConfiguration();
-		var whiteNoiseConfiguration = new WhiteNoiseConfiguration();
-		var photoVisualizerConfiguration = new PhotoVisualizerConfiguration
-		{
-			FilePath = args[2],
-			Width = 128,
-			Height = 128,
-		};
-
-		services
-			.AddSingleton(gradientNoiseConfiguration)
-			.AddSingleton(whiteNoiseConfiguration)
-			.AddSingleton(photoVisualizerConfiguration);
-
-		return services;
-	}
+	public static IServiceCollection AddPerlinNoise(this IServiceCollection services)
+		=> services
+			.AddSingleton<INoise2, PerlinNoise2>()
+			.AddSingleton(new PerlinNoiseConfiguration());
 }

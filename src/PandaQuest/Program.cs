@@ -10,7 +10,7 @@ Game.CreateDefaultBuilder()
 		.AddMovement(true)
 		.AddPcInput()
 		.AddPlayer()
-		.AddWorldGeneration<FiniteWorldGenerator, GradientNoise2>()
+		.AddWorldGeneration<FiniteWorldGenerator, PerlinNoise2>()
 		.AddConfiguration())
 	.Build()
 	.Run();

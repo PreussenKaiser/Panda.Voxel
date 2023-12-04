@@ -46,7 +46,7 @@ public static class ServiceCollectionExtensions
 	{
 		return services
 			.AddSingleton<IWorldGenerator, TWorldGenerator>()
-			.AddSingleton<INoise2, GradientNoise2>();
+			.AddSingleton<INoise2, PerlinNoise2>();
 	}
 
 	public static IServiceCollection AddConfiguration(this IServiceCollection services)
@@ -55,7 +55,7 @@ public static class ServiceCollectionExtensions
 		var finiteWorldConfiguration = new FiniteWorldConfiguration { Dimensions = new Vector2(8) };
 		var mouseConfiguration = new MouseConfiguration { Sensitivity = .001f };
 		var worldConfiguration = new WorldConfiguration { ChunkSize = 16, FlatLimit = 48, WorldHeight = 128, };
-		var gradientNoiseConfiguration = new GradientNoiseConfiguration(4);
+		var gradientNoiseConfiguration = new PerlinNoiseConfiguration(4);
 
 		return services
 			.AddSingleton(displayConfiguration)
