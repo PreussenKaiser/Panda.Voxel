@@ -7,11 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="SimplexNoise" Version="2.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Panda.Extensions\Panda.Extensions.csproj" />
+		<ProjectReference Include="..\Panda.Extensions\Panda.Extensions.csproj" />
 	</ItemGroup>
 
 </Project>

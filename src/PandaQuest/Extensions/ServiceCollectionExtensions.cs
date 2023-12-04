@@ -42,11 +42,11 @@ public static class ServiceCollectionExtensions
 
 	public static IServiceCollection AddWorldGeneration<TWorldGenerator, TNoise>(this IServiceCollection services)
 		where TWorldGenerator : class, IWorldGenerator
-		where TNoise : class, INoise
+		where TNoise : class, INoise2
 	{
 		return services
 			.AddSingleton<IWorldGenerator, TWorldGenerator>()
-			.AddSingleton<INoise, GradientNoise2>();
+			.AddSingleton<INoise2, GradientNoise2>();
 	}
 
 	public static IServiceCollection AddConfiguration(this IServiceCollection services)

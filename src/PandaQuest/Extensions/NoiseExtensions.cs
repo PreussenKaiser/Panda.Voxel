@@ -7,15 +7,12 @@ namespace PandaQuest.Extensions;
 
 public static class NoiseExtensions
 {
-	public static BlockIndex GetBlockIndex(this INoise noise, Vector3 position, WorldConfiguration configuration)
+	public static BlockIndex GetBlockIndex(this INoise2 noise, Vector3 position, WorldConfiguration configuration)
 	{
-		var x = (int)position.X;
-		var y = (int)position.Y;
+		float value = noise.GetValue(position.X, position.Z);
+		float surfaceY = value + configuration.FlatLimit;
 
-		int value = noise.GetValue(x, y);
-		int surfaceY = value + configuration.FlatLimit;
-
-		var index = y < surfaceY ? BlockIndex.Dirt : BlockIndex.Air;
+		var index = position.Z < surfaceY ? BlockIndex.Dirt : BlockIndex.Air;
 
 		return index;
 	}

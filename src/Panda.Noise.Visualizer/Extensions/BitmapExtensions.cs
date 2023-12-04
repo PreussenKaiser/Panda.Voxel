@@ -4,7 +4,7 @@ using System.Runtime.Versioning;
 namespace Panda.Noise.Visualizer.Extensions;
 
 [SupportedOSPlatform("windows")]
-public static class ImageExtensions
+public static class BitmapExtensions
 {
 	public static void Fill(this Bitmap image, Action<int, int> action)
 	{

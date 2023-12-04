@@ -3,20 +3,19 @@ using Panda.Noise.Abstractions;
 using Panda.Noise.Visualizer.Configuration;
 using Panda.Noise.Visualizer.Extensions;
 using Panda.Noise.Visualizer.Interfaces;
-using Panda.Noise.Visualizer.Utilities;
 using System.Drawing;
-using System.Runtime.Versioning;
 
 namespace Panda.Noise.Visualizer.Implementations;
 
-[SupportedOSPlatform("windows")]
 public sealed class PhotoVisualizerService(
-	INoise noise,
+	INoise2 noise,
+	IColorPicker colorPicker,
 	PhotoVisualizerConfiguration configuration,
 	ILogger<PhotoVisualizerService> logger)
 		: IVisualizerService
 {
-	private readonly INoise noise = noise;
+	private readonly INoise2 noise = noise;
+	private readonly IColorPicker colorPicker = colorPicker;
 	private readonly PhotoVisualizerConfiguration configuration = configuration;
 	private readonly ILogger<PhotoVisualizerService> logger = logger;
 
@@ -26,15 +25,18 @@ public sealed class PhotoVisualizerService(
 
 		bitmap.Fill((x, y) =>
 		{
-			int value = this.noise.GetValue(x, y);
-			Color color = ColorHelper.GetColor(value);
+			float noise = this.noise.GetValue(x, y);
+			float parsedNoise = (noise + 1) / 2;
+			float colorValue = Math.Abs(parsedNoise) * 255;
+
+			Color color = this.colorPicker.Pick((int)colorValue);
 
 			bitmap.SetPixel(x, y, color);
 		});
 
 		string path = CreateFullPath(this.configuration.FilePath);
 		this.logger.LogInformation("Saving visual to {FilePath}", path);
-
+		    
 		bitmap.Save(path);
 		// TODO: Open file.
 	}

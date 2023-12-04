@@ -9,11 +9,11 @@ public sealed class Chunk
 {
 	public readonly Vector2 Position;
 
-	private readonly INoise noise;
+	private readonly INoise2 noise;
 	private readonly WorldConfiguration configuration;
 	private readonly IDictionary<Vector3, Block> blocks;
 
-	public Chunk(Vector2 position, INoise noise, WorldConfiguration configuration)
+	public Chunk(Vector2 position, INoise2 noise, WorldConfiguration configuration)
 	{
 		this.Position = position;
 

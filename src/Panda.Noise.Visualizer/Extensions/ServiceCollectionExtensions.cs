@@ -13,7 +13,8 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddVisualizer(this IServiceCollection services)
 	{
 		services
-			.AddSingleton<INoise, GradientNoise2>()
+			.AddSingleton<IColorPicker, GrayScaleColorPicker>()
+			.AddSingleton<INoise2, GradientNoise2>()
 			.AddSingleton<IVisualizerService, PhotoVisualizerService>();
 
 		return services;
@@ -22,16 +23,18 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddConfiguration(this IServiceCollection services, string[] args)
 	{
 		// TODO: Getting configuration like this is cringe.
-		var noiseConfiguration = new GradientNoiseConfiguration(4);
+		var gradientNoiseConfiguration = new GradientNoiseConfiguration();
+		var whiteNoiseConfiguration = new WhiteNoiseConfiguration();
 		var photoVisualizerConfiguration = new PhotoVisualizerConfiguration
 		{
 			FilePath = args[2],
-			Width = 1024,
-			Height = 1024,
+			Width = 128,
+			Height = 128,
 		};
 
 		services
-			.AddSingleton(noiseConfiguration)
+			.AddSingleton(gradientNoiseConfiguration)
+			.AddSingleton(whiteNoiseConfiguration)
 			.AddSingleton(photoVisualizerConfiguration);
 
 		return services;

@@ -8,7 +8,7 @@ namespace PandaQuest.Generators;
 
 public sealed class FiniteWorldGenerator : IWorldGenerator
 {
-	private readonly INoise noise;
+	private readonly INoise2 noise;
 	private readonly FiniteWorldConfiguration finiteWorldConfiguration;
 	private readonly WorldConfiguration worldConfiguration;
 	private readonly Chunk[,] chunks;
@@ -16,7 +16,7 @@ public sealed class FiniteWorldGenerator : IWorldGenerator
 	private bool wasGenerated;
 	private IEnumerable<BlockFace>? meshCache;
 
-	public FiniteWorldGenerator(INoise noise, FiniteWorldConfiguration finiteWorldConfiguration, WorldConfiguration worldConfiguration)
+	public FiniteWorldGenerator(INoise2 noise, FiniteWorldConfiguration finiteWorldConfiguration, WorldConfiguration worldConfiguration)
 	{
 		this.noise = noise;
 		this.finiteWorldConfiguration = finiteWorldConfiguration;
