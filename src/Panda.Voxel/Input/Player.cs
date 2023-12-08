@@ -7,24 +7,17 @@ using Panda.Voxel.States;
 
 namespace Panda.Voxel.Input;
 
-public sealed class Player
+public sealed class Player(ICamera camera, IMovement movement, MouseLooking looking)
 {
 	public PlayerState State;
 
 	private const int PLAYER_HEIGHT = 2;
 
-	private readonly ICamera camera;
-	private readonly IMovement movement;
-	private readonly MouseLooking looking;
+	private readonly ICamera camera = camera;
+	private readonly IMovement movement = movement;
+	private readonly MouseLooking looking = looking;
 
 	private Vector3 moveVector;
-
-	public Player(ICamera camera, IMovement movement, MouseLooking looking)
-	{
-		this.camera = camera;
-		this.movement = movement;
-		this.looking = looking;
-	}
 
 	public Vector3 Position => new(
 		this.camera.Position.X,

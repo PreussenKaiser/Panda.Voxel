@@ -6,24 +6,15 @@ using Panda.Voxel.Models;
 
 namespace Panda.Voxel.Generators;
 
-public sealed class FiniteWorldGenerator : IWorldGenerator
+public sealed class FiniteWorldGenerator(INoise2 noise, FiniteWorldConfiguration finiteWorldConfiguration, WorldConfiguration worldConfiguration) : IWorldGenerator
 {
-	private readonly INoise2 noise;
-	private readonly FiniteWorldConfiguration finiteWorldConfiguration;
-	private readonly WorldConfiguration worldConfiguration;
-	private readonly Chunk[,] chunks;
+	private readonly INoise2 noise = noise;
+	private readonly FiniteWorldConfiguration finiteWorldConfiguration = finiteWorldConfiguration;
+	private readonly WorldConfiguration worldConfiguration = worldConfiguration;
+	private readonly Chunk[,] chunks = new Chunk[(int)finiteWorldConfiguration.Dimensions.X, (int)finiteWorldConfiguration.Dimensions.Y];
 
 	private bool wasGenerated;
 	private IEnumerable<BlockFace>? meshCache;
-
-	public FiniteWorldGenerator(INoise2 noise, FiniteWorldConfiguration finiteWorldConfiguration, WorldConfiguration worldConfiguration)
-	{
-		this.noise = noise;
-		this.finiteWorldConfiguration = finiteWorldConfiguration;
-		this.worldConfiguration = worldConfiguration;
-
-		this.chunks = new Chunk[(int)this.finiteWorldConfiguration.Dimensions.X, (int)this.finiteWorldConfiguration.Dimensions.Y];
-	}
 
 	public IEnumerable<Chunk> Chunks => this.chunks.Flatten();
 

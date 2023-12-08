@@ -3,14 +3,9 @@ using Panda.Voxel.Builders;
 
 namespace Panda.Voxel.Lifecycle;
 
-public sealed class Game
+public sealed class Game(IServiceProvider provider)
 {
-	private readonly IServiceProvider provider;
-
-	public Game(IServiceProvider provider)
-	{
-		this.provider = provider;
-	}
+	private readonly IServiceProvider provider = provider;
 
 	public static GameBuilder CreateDefaultBuilder()
 	{

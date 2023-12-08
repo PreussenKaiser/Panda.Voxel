@@ -3,14 +3,9 @@ using Panda.Voxel.Lifecycle;
 
 namespace Panda.Voxel.Builders;
 
-public sealed class GameBuilder
+public sealed class GameBuilder(IServiceCollection? services = null)
 {
-	public readonly IServiceCollection Services;
-
-	public GameBuilder(IServiceCollection? services = null)
-	{
-		this.Services = services ?? new ServiceCollection();
-	}
+	public readonly IServiceCollection Services = services ?? new ServiceCollection();
 
 	public GameBuilder ConfigureServices(Action<IServiceCollection> action)
 	{

@@ -1,10 +1,8 @@
 ﻿namespace Panda.Voxel.Configuration;
 
-public sealed class DisplayConfiguration
+public sealed class DisplayConfiguration(int width, int height, int fieldOfView)
 {
-	public required int Width { get; init; }
-
-	public required int Height { get; init; }
-
-	public required int FieldOfView { get; init; }
+	public readonly int Width = width;
+	public readonly int Height = height;
+	public readonly int FieldOfView = fieldOfView;
 }

@@ -2,14 +2,8 @@
 
 namespace Panda.Voxel.Models;
 
-public readonly struct Block
+public readonly struct Block(BlockIndex id, Vector3 position)
 {
-	public readonly BlockIndex Id;
-	public readonly Vector3 Position;
-
-	public Block(BlockIndex id, Vector3 position)
-	{
-		this.Id = id;
-		this.Position = position;
-	}
+	public readonly BlockIndex Id = id;
+	public readonly Vector3 Position = position;
 }

@@ -1,7 +1,7 @@
 ﻿namespace Panda.Voxel.Configuration;
 
 // Will contain more options like IsInverted.
-public sealed class MouseConfiguration
+public sealed class MouseConfiguration(float sensitivity)
 {
-	public required float Sensitivity { get; init; }
+	public readonly float Sensitivity = sensitivity;
 }

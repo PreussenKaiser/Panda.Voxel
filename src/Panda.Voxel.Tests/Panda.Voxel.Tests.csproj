@@ -25,7 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Panda.Extensions\Panda.Extensions.csproj" />
     <ProjectReference Include="..\Panda.Noise\Panda.Noise.csproj" />
-    <ProjectReference Include="..\PandaQuest\Panda.Voxel.csproj" />
+    <ProjectReference Include="..\Panda.Voxel\Panda.Voxel.csproj" />
   </ItemGroup>
 
 </Project>

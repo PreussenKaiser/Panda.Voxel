@@ -5,22 +5,13 @@ using Panda.Voxel.Extensions;
 
 namespace Panda.Voxel.Models;
 
-public sealed class Chunk
+public sealed class Chunk(Vector2 position, INoise2 noise, WorldConfiguration configuration)
 {
-	public readonly Vector2 Position;
+	public readonly Vector2 Position = position;
 
-	private readonly INoise2 noise;
-	private readonly WorldConfiguration configuration;
-	private readonly IDictionary<Vector3, Block> blocks;
-
-	public Chunk(Vector2 position, INoise2 noise, WorldConfiguration configuration)
-	{
-		this.Position = position;
-
-		this.noise = noise;
-		this.configuration = configuration;
-		this.blocks = new Dictionary<Vector3, Block>();
-	}
+	private readonly INoise2 noise = noise;
+	private readonly WorldConfiguration configuration = configuration;
+	private readonly Dictionary<Vector3, Block> blocks = [];
 
 	public IDictionary<Vector3, Block> Blocks => this.blocks;
 

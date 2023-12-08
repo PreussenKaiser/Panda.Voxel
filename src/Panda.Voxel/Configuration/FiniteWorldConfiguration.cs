@@ -2,10 +2,10 @@
 
 namespace Panda.Voxel.Configuration;
 
-public sealed class FiniteWorldConfiguration
+public sealed class FiniteWorldConfiguration(Vector2 dimensions)
 {
 	/// <summary>
 	/// Length and width od the generated map.
 	/// </summary>
-	public required Vector2 Dimensions { get; init; }
+	public readonly Vector2 Dimensions = dimensions;
 }

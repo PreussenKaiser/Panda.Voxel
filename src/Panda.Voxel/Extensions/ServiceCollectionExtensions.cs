@@ -51,10 +51,10 @@ public static class ServiceCollectionExtensions
 
 	public static IServiceCollection AddConfiguration(this IServiceCollection services)
 	{
-		var displayConfiguration = new DisplayConfiguration { Width = 800, Height = 480, FieldOfView = 90, };
-		var finiteWorldConfiguration = new FiniteWorldConfiguration { Dimensions = new Vector2(8) };
-		var mouseConfiguration = new MouseConfiguration { Sensitivity = .001f };
-		var worldConfiguration = new WorldConfiguration { ChunkSize = 16, FlatLimit = 48, WorldHeight = 128, };
+		var displayConfiguration = new DisplayConfiguration(800, 480, 90);
+		var finiteWorldConfiguration = new FiniteWorldConfiguration(new Vector2(8));
+		var mouseConfiguration = new MouseConfiguration(.001f);
+		var worldConfiguration = new WorldConfiguration(16, 48, 128);
 		var perlineNoiseConfiguration = new PerlinNoiseConfiguration();
 
 		return services

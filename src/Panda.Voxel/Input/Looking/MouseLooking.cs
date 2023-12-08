@@ -4,23 +4,12 @@ using Panda.Voxel.Configuration;
 
 namespace Panda.Voxel.Input.Looking;
 
-public sealed class MouseLooking
+public sealed class MouseLooking(MouseConfiguration mouseConfiguration, DisplayConfiguration displayConfiguration)
 {
-	private readonly MouseConfiguration mouse;
-	private readonly DisplayConfiguration display;
-	private readonly Vector2 screenCenter;
+	private readonly MouseConfiguration mouse = mouseConfiguration;
+	private readonly Vector2 screenCenter = new(displayConfiguration.Width / 2, displayConfiguration.Height / 2);
 
-	private MouseState previousState;
-
-	public MouseLooking(MouseConfiguration mouseConfiguration, DisplayConfiguration displayConfiguration)
-	{
-		this.mouse = mouseConfiguration;
-		this.display = displayConfiguration;
-		this.screenCenter = new Vector2(displayConfiguration.Width / 2, displayConfiguration.Height / 2);
-
-		MouseState state = Mouse.GetState();
-		this.previousState = state;
-	}
+	private MouseState previousState = Mouse.GetState();
 
 	public Vector2 GetInput(GameTime gameTime)
 	{

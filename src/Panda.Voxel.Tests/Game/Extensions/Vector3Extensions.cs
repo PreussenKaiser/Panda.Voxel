@@ -6,12 +6,7 @@ namespace Panda.Voxel.Tests.Game.Extensions;
 
 public sealed class Vector3Extensions
 {
-	private readonly WorldConfiguration worldConfiguration = new WorldConfiguration
-	{
-		ChunkSize = 16,
-		WorldHeight = 128,
-		FlatLimit = 48,
-	};
+	private readonly WorldConfiguration worldConfiguration = new(16, 128, 48);
 
 	[Theory]
 	[InlineData(0, 0, 0, 0)]
