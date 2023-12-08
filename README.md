@@ -1,4 +1,4 @@
-# PandaQuest
+# Panda.Voxel
 ## Voxel block game A.K.A a Minecraft clone
 
 ### Goals
@@ -16,4 +16,4 @@ TLDR: no external dependencies.
 Pretty sure this requires Windows.
 
 ### Testing
-All tests are in PandaQuest.Tests, run them via `dotnet test` in /src or via a GUI.
+All tests are in Panda.Voxel.Tests, run them via `dotnet test` in /src or via a GUI.

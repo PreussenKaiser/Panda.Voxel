@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B1550BE4-8893-4066-B615-4009AF80998B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Noise", "Panda.Noise\Panda.Noise.csproj", "{5017B136-9F2F-43DF-8A8B-8380D8DD8CB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Extensions", "Panda.Extensions\Panda.Extensions.csproj", "{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Noise.Visualizer", "Panda.Noise.Visualizer\Panda.Noise.Visualizer.csproj", "{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Voxel", "Panda.Voxel\Panda.Voxel.csproj", "{2FBA42C3-5DDE-40E4-BDB3-30CFCAE4D527}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panda.Voxel.Tests", "Panda.Voxel.Tests\Panda.Voxel.Tests.csproj", "{2014FBDD-96A6-4CCD-A8DA-3758793FE5ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5017B136-9F2F-43DF-8A8B-8380D8DD8CB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5017B136-9F2F-43DF-8A8B-8380D8DD8CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5017B136-9F2F-43DF-8A8B-8380D8DD8CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5017B136-9F2F-43DF-8A8B-8380D8DD8CB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CD03A2B-01F1-4D20-B0D4-7858ED80AEE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68FD188C-7AEF-4A6C-AC42-E0311711CB8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FBA42C3-5DDE-40E4-BDB3-30CFCAE4D527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FBA42C3-5DDE-40E4-BDB3-30CFCAE4D527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FBA42C3-5DDE-40E4-BDB3-30CFCAE4D527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FBA42C3-5DDE-40E4-BDB3-30CFCAE4D527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2014FBDD-96A6-4CCD-A8DA-3758793FE5ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2014FBDD-96A6-4CCD-A8DA-3758793FE5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2014FBDD-96A6-4CCD-A8DA-3758793FE5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2014FBDD-96A6-4CCD-A8DA-3758793FE5ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {698313F2-7AA8-4596-831E-09B4D5A49FD9}
+	EndGlobalSection
+EndGlobal
