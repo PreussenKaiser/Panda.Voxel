@@ -1,73 +1,51 @@
-﻿using Panda.Extensions;
-using Panda.Noise.Abstractions;
+﻿using Panda.Noise.Abstractions;
 using Panda.Noise.Configuration;
-using System.Numerics;
+using Panda.Extensions.Math;
 
 namespace Panda.Noise.Gradient;
 
-/// <summary>
-/// 2d gradient noise.
-/// </summary>
 public sealed class PerlinNoise2(PerlinNoiseConfiguration configuration) : INoise2
 {
 	private readonly PerlinNoiseConfiguration configuration = configuration;
-	private readonly Random random = new(configuration.Seed);
-
-	private int[]? permutationTable;
 
 	public float GetValue(float x, float y)
 	{
-		float scaledX = x * this.configuration.Frequency;
-		float scaledY = y * this.configuration.Frequency;
+		this.Scale(ref x, ref y);
 
-		int X = (int)Math.Floor(scaledX) & 255;
-		int Y = (int)Math.Floor(scaledY) & 255;
+		int x0 = MathHelper.FastFloor(x);
+		int y0 = MathHelper.FastFloor(y);
 
-		float xFloor = scaledX - (int)Math.Floor(scaledX);
-		float yFloor = scaledY - (int)Math.Floor(scaledY);
+		var xd0 = (float)(x - x0);
+		var yd0 = (float)(y - y0);
+		var xd1 = xd0 - 1;
+		var yd1 = yd0 - 1;
 
-		var topRight = new Vector2(xFloor - 1, yFloor - 1);
-		var topLeft = new Vector2(xFloor, yFloor - 1);
-		var bottomRight = new Vector2(xFloor - 1, yFloor);
-		var bottomLeft = new Vector2(xFloor, yFloor);
+		float xs = MathHelper.InterpolateQuintic(xd0);
+		float ys = MathHelper.InterpolateQuintic(yd0);
 
-		this.permutationTable ??= this.GeneratePermutation();
-		int valueTopRight = this.permutationTable[this.permutationTable[X + 1] + Y + 1];
-		int valueTopLeft = this.permutationTable[this.permutationTable[X] + Y + 1];
-		int valueBottomRight = this.permutationTable[this.permutationTable[X + 1] + Y];
-		int valueBottomLeft = this.permutationTable[this.permutationTable[X] + Y];
+		x0 *= Prime.X;
+		y0 *= Prime.Y;
+		int x1 = x0 + Prime.X;
+		int y1 = y0 + Prime.Y;
 
-		float dotTopRight = Vector2.Dot(topRight, valueTopRight.ToConstantVector());
-		float dotTopLeft = Vector2.Dot(topLeft, valueTopLeft.ToConstantVector());
-		float dotBottomRight = Vector2.Dot(bottomRight, valueBottomRight.ToConstantVector());
-		float dotBottomLeft = Vector2.Dot(bottomLeft, valueBottomLeft.ToConstantVector());
+		float xf0 = MathHelper.LinearInterpolate(
+			MathHelper.Gradient(this.configuration.Seed, x0, y0, xd0, yd0),
+			MathHelper.Gradient(this.configuration.Seed, x1, y0, xd1, yd0),
+			xs);
 
-		float u = xFloor.Fade();
-		float v = yFloor.Fade();
+		float xf1 = MathHelper.LinearInterpolate(
+			MathHelper.Gradient(this.configuration.Seed, x0, y1, xd0, yd1),
+			MathHelper.Gradient(this.configuration.Seed, x1, y1, xd1, yd1),
+			xs);
 
-		float result = u.Lerp(
-			v.Lerp(dotBottomLeft, dotTopLeft),
-			v.Lerp(dotBottomRight, dotTopRight));
+		float result = MathHelper.LinearInterpolate(xf0, xf1, ys) * 1.4247691104677813f;
 
 		return result;
 	}
 
-	private int[] GeneratePermutation()
+	private void Scale(ref float x, ref float y)
 	{
-		var tableOne = new int[this.configuration.Permutations];
-		for (var i = 0; i < this.configuration.Permutations; i++)
-		{
-			tableOne[i] = i;
-		}
-
-		this.random.Shuffle(tableOne);
-
-		var tableTwo = new int[this.configuration.Permutations];
-		for (var i = 0; i < this.configuration.Permutations; i++)
-		{
-			tableTwo[i] = tableOne[i];
-		}
-
-		return [..tableOne, ..tableTwo];
+		x *= this.configuration.Frequency;
+		y *= this.configuration.Frequency;
 	}
 }

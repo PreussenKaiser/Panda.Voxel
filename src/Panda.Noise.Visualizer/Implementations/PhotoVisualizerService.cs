@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Panda.Extensions;
 using Panda.Noise.Abstractions;
 using Panda.Noise.Visualizer.Configuration;
 using Panda.Noise.Visualizer.Extensions;
@@ -25,11 +26,10 @@ public sealed class PhotoVisualizerService(
 
 		bitmap.Fill((x, y) =>
 		{
-			float noise = this.noise.GetValue(x, y);
-			float parsedNoise = (noise + 1) / 2;
-			float colorValue = Math.Abs(parsedNoise) * 255;
+			float noiseValue = this.noise.GetValue(x, y);
+			float scaledNoise = noiseValue.Scale(255);
 
-			Color color = this.colorPicker.Pick((int)colorValue);
+			Color color = this.colorPicker.Pick((int)scaledNoise);
 
 			bitmap.SetPixel(x, y, color);
 		});

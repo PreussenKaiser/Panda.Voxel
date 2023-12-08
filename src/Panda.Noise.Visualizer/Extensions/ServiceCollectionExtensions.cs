@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
 		=> services
 			.AddSingleton<IVisualizerService, PhotoVisualizerService>()
 			.AddSingleton<IColorPicker, TColorPicker>()
-			.AddSingleton(new PhotoVisualizerConfiguration(args[2], 128, 128));
+			.AddSingleton(new PhotoVisualizerConfiguration(args[2], 1024, 1024));
 
 	public static IServiceCollection AddRandomNoise(this IServiceCollection services)
 		=> services

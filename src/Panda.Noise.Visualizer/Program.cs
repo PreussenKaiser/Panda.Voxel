@@ -6,6 +6,6 @@ await ConsoleApplication
 	.CreateDefaultBuilder(args)
 	.ConfigureServices(services => services
 		.AddVisualizer<GrayScaleColorPicker>(args)
-		.AddRandomNoise())
+		.AddPerlinNoise())
 	.Build()
 	.RunAsync();

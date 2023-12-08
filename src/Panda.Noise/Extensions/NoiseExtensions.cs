@@ -12,6 +12,13 @@ public static class NoiseExtensions
 		return value;
 	}
 
+	public static float GetValue(this INoise2 noise, Vector3 vector)
+	{
+		float value = noise.GetValue(vector.X, vector.Z);
+
+		return value;
+	}
+
 	public static float[,] GenerateNoiseMap(this INoise2 noise, int width, int height)
 	{
 		var map = new float[width, height];
