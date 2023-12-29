@@ -1,26 +1,54 @@
 #include <stdio.h>
+#include <string.h>
+#include "state/game.h"
 #include "graphics/window.h"
 #include "graphics/renderer.h"
 
+#define UNKNOWN_GAPI 2;
+#define INVALID_ARGS 3;
+
+int init(void);
+int update(void);
 void render(void);
 void handle_error(int error_code);
 
 // TODO: i think this error handling sucks
-int main(void)
+int main(const int argc, const char **argv)
 {
-    int exit_code = 0;
-
-    exit_code = window_init(800, 600);
-    if (exit_code)
+    int exit_code;
+    if (argc < 1)
+    {
+	exit_code = INVALID_ARGS
 	goto error;
+    }
 
-    exit_code = window_loop(render);
-    if (exit_code)
-	goto error;
+    if (!strcmp(argv[1], "opengl"))
+    {
+	game_init(init, update);
+	exit_code = game_run();
+    }
+    else
+    {
+	exit_code = UNKNOWN_GAPI;
+    }
 
 error:
     if (exit_code)
 	handle_error(exit_code);
+
+    return exit_code;
+}
+
+int init(void)
+{
+    int exit_code = window_init(800, 600);
+
+    return exit_code;
+}
+
+int update(void)
+{
+    int exit_code = window_loop(render);
 
     return exit_code;
 }
@@ -46,6 +74,14 @@ void handle_error(const int error_code)
     {
 	case 1:
 	    error_message = "There was an error with the window";
+	    break;
+
+	case 2:
+	    error_message = "Unknown graphics API";
+	    break;
+
+	case 3:
+	    error_message = "Invalid arguments";
 	    break;
 
 	default:

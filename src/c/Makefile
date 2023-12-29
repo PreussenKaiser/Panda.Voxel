@@ -1,6 +1,7 @@
 CC = gcc
 LIBS = glfw3
-SOURCE_FILES = src/*.c src/graphics/*.c lib/*.c
+SOURCE_FILES = src/*.c src/*/*.c lib/*.c
+ARGS = opengl
 
 build:
 	@echo '--- Building ---'
@@ -10,7 +11,7 @@ build:
 
 run: build
 	@echo '--- Running ---'
-	@./out/test.exe
+	@./out/test.exe ${ARGS}
 	@echo '--- Finished ---'
 
 clean:
