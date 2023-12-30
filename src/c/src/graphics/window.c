@@ -5,6 +5,8 @@
 #include "window.h"
 
 void window_process_input();
+void window_init_shaders(void);
+void window_render(float vertices[], unsigned int indices[]);
 
 struct Window
 {
@@ -66,17 +68,14 @@ int window_loop(void (tick(void)))
     while (!glfwWindowShouldClose(window.handle))
     {
 	window_process_input();
-
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	tick();
 
 	glfwSwapBuffers(window.handle);
 	glfwPollEvents();
     }
 
 error:
-    if (exit_code)
-	glfwTerminate();
+    glfwTerminate();
 
     return exit_code;
 }
@@ -93,3 +92,4 @@ void window_process_input(void)
     if (glfwGetKey(window.handle, GLFW_KEY_ESCAPE))
 	glfwSetWindowShouldClose(window.handle, true);
 }
+

@@ -3,6 +3,7 @@
 #include "state/game.h"
 #include "graphics/window.h"
 #include "graphics/renderer.h"
+#include "util/array.h"
 
 #define UNKNOWN_GAPI 2;
 #define INVALID_ARGS 3;
@@ -41,9 +42,10 @@ error:
 
 int init(void)
 {
-    int exit_code = window_init(800, 600);
+    window_init(800, 600);
+    renderer_init();
 
-    return exit_code;
+    return 0;
 }
 
 int update(void)
@@ -65,6 +67,8 @@ void render(void)
 	0, 1, 3,
 	1, 2, 3
     };
+
+    renderer_render(vertices, ARRAY_SIZE(vertices), indices, ARRAY_SIZE(indices));
 }
 
 void handle_error(const int error_code)
