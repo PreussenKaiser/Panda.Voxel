@@ -5,6 +5,7 @@
 #include "renderer.h"
 #include "../util/file.h"
 
+// TODO: probably bad
 const char *vertex_shader_source;
 const char *fragment_shader_source;
 
@@ -19,6 +20,8 @@ void renderer_handle_error(const unsigned int vertex_shader, const unsigned int 
     {
 	glGetShaderInfoLog(vertex_shader, log_buffer_length, NULL, log_buffer);
 	printf("ERROR COMPILING VERTEX SHADER\n%s\n", log_buffer);
+
+	exit(1);
     }
 
     glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
@@ -26,6 +29,8 @@ void renderer_handle_error(const unsigned int vertex_shader, const unsigned int 
     {
 	glGetShaderInfoLog(fragment_shader, log_buffer_length, NULL, log_buffer);
 	printf("ERROR COMPILING FRAGMENT SHADER\n%s\n", log_buffer);
+
+	exit(1);
     }
 
     glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
@@ -33,6 +38,8 @@ void renderer_handle_error(const unsigned int vertex_shader, const unsigned int 
     {
 	glGetProgramInfoLog(shader_program, log_buffer_length, NULL, log_buffer);
 	printf("ERROR LINKING SHADER PROGRAM\n%s\n", log_buffer);
+
+	exit(1);
     }
 }
 
@@ -40,9 +47,6 @@ int renderer_init(void)
 {
     vertex_shader_source = file_read("res/shaders/basic.vs");
     fragment_shader_source = file_read("res/shaders/basic.fs");
-
-    free((char *)vertex_shader_source);
-    free((char *)fragment_shader_source);
 
     return 0;
 }
@@ -64,18 +68,19 @@ void renderer_init_shaders(void)
     glLinkProgram(shader_program);
     glUseProgram(shader_program);
 
-    glEnableVertexAttribArray(0);
-
-    renderer_handle_error(vertex_shader, fragment_shader, shader_program);
-
     glDeleteShader(vertex_shader);
     glDeleteShader(fragment_shader);
+
+    renderer_handle_error(vertex_shader, fragment_shader, shader_program);
 }
 
-void renderer_render(const float *vertices, const unsigned int vertex_length, const unsigned int *indices, const unsigned int index_length)
+void renderer_render(
+    const float *vertices,
+    const unsigned int vertex_size,
+    const unsigned int *indices,
+    const unsigned int index_length,
+    const unsigned int index_size)
 {
-    renderer_init_shaders();
-
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -86,13 +91,17 @@ void renderer_render(const float *vertices, const unsigned int vertex_length, co
 
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertex_size, vertices, GL_STATIC_DRAW);
 
     glGenBuffers(1, &ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof indices, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_size, indices, GL_STATIC_DRAW);
+
+    renderer_init_shaders();
 
     const unsigned int length_half = index_length / 2;
+    glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, length_half, GL_FLOAT, GL_FALSE, length_half * sizeof(float), (void *)0);
+
     glDrawElements(GL_TRIANGLES, index_length, GL_UNSIGNED_INT, 0);
 }

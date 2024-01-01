@@ -82,7 +82,6 @@ error:
 
 void window_process_input(void)
 {
-    // TODO: panic here
     if (window.handle == NULL)
     {
 	glfwTerminate();
